@@ -23,12 +23,14 @@ use App\Models\TypeVoiture;
 |
  */
 Route::prefix("v1")->group(function () {
-    Route::apiResource("/marque", MarqueController::class);
-    Route::apiResource("/modele",ModeleController::class);
-    Route::apiResource("/parametre",ParametreController::class);
-    Route::apiResource("/type",TypeVoitureController::class);
-    Route::apiResource("/equipement",EquipementController::class);
-    Route::apiResource("/entreprise",EntrepriseController::class);
-    Route::apiResource("/province",ProvinceController::class);
-    Route::apiResource("/commune",CommuneController::class);
+    Route::prefix("voiture")->group(function(){
+        Route::apiResource("/marque", MarqueController::class);
+        Route::apiResource("/modele",ModeleController::class);
+        Route::apiResource("/parametre",ParametreController::class);
+        Route::apiResource("/type",TypeVoitureController::class);
+        Route::apiResource("/equipement",EquipementController::class);
+        Route::apiResource("/entreprise",EntrepriseController::class);
+        Route::apiResource("/province",ProvinceController::class);
+        Route::apiResource("/commune",CommuneController::class);
+    });
 });
