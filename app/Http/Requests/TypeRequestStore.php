@@ -25,6 +25,7 @@ class TypeRequestStore extends FormRequest
     {
         return [
             "type"=>"required|unique:type_voitures,type",
+            "photo_type_voiture"=>'required'
         ];
     }
 }

@@ -20,6 +20,9 @@ class ModeleController extends Controller
     public function index()
     {
         $modele = Modele::all();
+        if (sizeof($modele) == 0) {
+            return $this->sendError('Modele not found.');
+        }
         return $this->sendResponse(ModeleResource::collection($modele), 'fetch is called Successfully.');
     }
 
@@ -59,6 +62,10 @@ class ModeleController extends Controller
      */
     public function update(ModeleRequestUpdate $request, $id)
     {
+        $modeleExist=Modele::where('id',$id)->exists();
+        if ($modeleExist == null) {
+            return $this->sendError('Model is not exist.');
+        }
         $modele = Modele::findOrFail($id);
         $modele->update($request->all());
         return $this->sendResponse(new ModeleResource($modele), 'Modele Updated Successfully.');
@@ -72,6 +79,10 @@ class ModeleController extends Controller
      */
     public function destroy($id)
     {
+        $modeleExist=Modele::where('id',$id)->exists();
+        if ($modeleExist == null) {
+            return $this->sendError('Model is not exist.');
+        }
         $modele = Modele::findOrFail($id);
         $modele->delete();
         return $this->sendResponse([], 'Modele Deleted Successfully.');

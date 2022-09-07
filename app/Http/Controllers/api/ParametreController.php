@@ -19,6 +19,9 @@ class ParametreController extends Controller
     public function index()
     {
         $parametre = Parametre::all();
+        if (sizeof($parametre) == 0) {
+            return $this->sendError('Parametre not found.');
+        }
         return $this->sendResponse(ParametreResource::collection($parametre), 'fetch is called Successfully.');
     }
 
@@ -58,6 +61,10 @@ class ParametreController extends Controller
      */
     public function update(ParametreRequestUpdate $request, $id)
     {
+        $parametreExist = Parametre::where('id', $id)->exists();
+        if ($parametreExist == null) {
+            return $this->sendError('Parametre is not exist.');
+        }
         $parametre = Parametre::findOrFail($id);
         $parametre->update($request->all());
         return $this->sendResponse(new ParametreResource($parametre), 'parametre Updated Successfully.');
@@ -71,6 +78,10 @@ class ParametreController extends Controller
      */
     public function destroy($id)
     {
+        $parametreExist = Parametre::where('id', $id)->exists();
+        if ($parametreExist == null) {
+            return $this->sendError('Parametre is not exist.');
+        }
         $parametre = Parametre::findOrFail($id);
         $parametre->delete();
         return $this->sendResponse([], 'Modele Deleted Successfully.');

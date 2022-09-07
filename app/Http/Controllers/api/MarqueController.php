@@ -19,6 +19,9 @@ class MarqueController extends Controller
     public function index()
     {
         $marque = Marque::all();
+        if (sizeof($marque) == 0) {
+            return $this->sendError('Marque not found.');
+        }
         return $this->sendResponse(MarqueResource::collection($marque), 'fetch is called Successfully.');
     }
 
@@ -59,6 +62,10 @@ class MarqueController extends Controller
      */
     public function update(MarqueRequestUpdate $request, $id)
     {
+        $marqueExist=Marque::where('id',$id)->exists();
+        if ($marqueExist == null) {
+            return $this->sendError('Marque is not exist.');
+        }
         $marque = Marque::findOrFail($id);
         $marque->update($request->all());
         return $this->sendResponse(new MarqueResource($marque), 'Marque Updated Successfully.');
@@ -72,6 +79,10 @@ class MarqueController extends Controller
      */
     public function destroy($id)
     {
+        $marqueExist=Marque::where('id',$id)->exists();
+        if ($marqueExist == null) {
+            return $this->sendError('Marque is not exist.');
+        }
         $marque = Marque::findOrFail($id);
         $marque->delete();
         return $this->sendResponse([], 'Product Deleted Successfully.');

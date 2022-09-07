@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\CommuneByProvinceResource;
 
-class TypeVoitureResource extends JsonResource
+class ProvinceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +17,9 @@ class TypeVoitureResource extends JsonResource
     {
         return [
             "id"=>$this->id,
-            "type"=>$this->type,
-            "photo_type_voiture"=>$this->photo_type_voiture
+            "nom_province"=>$this->nom_province,
+            "commune"=>CommuneByProvinceResource::collection($this->Communes)
+        
         ];
     }
 }

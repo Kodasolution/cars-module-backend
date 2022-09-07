@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EntrepriseRequestStore;
-use App\Http\Requests\EntrepriseRequestUpdate;
-use App\Http\Resources\EntrepriseResource;
-use App\Models\Entreprise;
+use App\Http\Requests\ProvinceRequestStore;
+use App\Http\Requests\ProvinceRequestupdate;
+use App\Http\Resources\ProvinceResource;
+use App\Models\Province;
 use Illuminate\Http\Request;
 
-class EntrepriseController extends Controller
+class ProvinceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,11 +18,11 @@ class EntrepriseController extends Controller
      */
     public function index()
     {
-        $entreprise = Entreprise::all();
-        if (sizeof($entreprise) == 0) {
-            return $this->sendError('Entreprese not found.');
+        $province = Province::all();
+        if (sizeof($province) == 0) {
+            return $this->sendError('Province not found.');
         }
-        return $this->sendResponse(EntrepriseResource::collection($entreprise), 'fetch is called Successfully.');
+        return $this->sendResponse(ProvinceResource::collection($province), 'fetch is called Successfully.');
     }
 
     /**
@@ -31,10 +31,10 @@ class EntrepriseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EntrepriseRequestStore $request)
+    public function store(ProvinceRequestStore $request)
     {
-        $entreprise = Entreprise::create($request->all());
-        return $this->sendResponse(new EntrepriseResource($entreprise), 'Entreprise Created Successfully.');
+        $province = Province::create($request->all());
+        return $this->sendResponse(new ProvinceResource($province), 'Province Created Successfully.');
     }
 
     /**
@@ -45,11 +45,11 @@ class EntrepriseController extends Controller
      */
     public function show($id)
     {
-        $entreprise = Entreprise::find($id);
-        if (is_null($entreprise)) {
+        $province = Province::find($id);
+        if (is_null($province)) {
             return $this->sendError('Entreprise not found.');
         }
-        return $this->sendResponse(new EntrepriseResource($entreprise), 'Entreprise is fetching Successfully .');
+        return $this->sendResponse(new ProvinceResource($province), 'Province is fetching Successfully .');
     }
 
     /**
@@ -59,15 +59,15 @@ class EntrepriseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EntrepriseRequestUpdate $request, $id)
+    public function update(ProvinceRequestupdate $request, $id)
     {
-        $entrepriseExist = Entreprise::where('id', $id)->exists();
-        if ($entrepriseExist == null) {
-            return $this->sendError('Entreprise is not exist.');
+        $provinceExist = Province::where('id', $id)->exists();
+        if ($provinceExist == null) {
+            return $this->sendError('Province is not exist.');
         }
-        $entreprise = Entreprise::findOrFail($id);
-        $entreprise->update($request->all());
-        return $this->sendResponse(new EntrepriseResource($entreprise), 'Entreprise Updated Successfully.');
+        $province = Province::findOrFail($id);
+        $province->update($request->all());
+        return $this->sendResponse(new ProvinceResource($province), 'Province Updated Successfully.');
     }
 
     /**
@@ -78,13 +78,13 @@ class EntrepriseController extends Controller
      */
     public function destroy($id)
     {
-        $entrepriseExist = Entreprise::where('id', $id)->exists();
-        if ($entrepriseExist == null) {
-            return $this->sendError('Entreprise is not exist.');
+        $provinceExist = Province::where('id', $id)->exists();
+        if ($provinceExist == null) {
+            return $this->sendError('Province is not exist.');
         }
-        $entreprise = Entreprise::findOrFail($id);
-        $entreprise->delete();
-        return $this->sendResponse([], 'Entreprise Deleted Successfully.');
+        $province = Province::findOrFail($id);
+        $province->delete();
+        return $this->sendResponse([], 'Province Deleted Successfully.');
     }
     public function sendResponse($result, $message)
     {

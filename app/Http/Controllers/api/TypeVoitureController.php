@@ -19,6 +19,9 @@ class TypeVoitureController extends Controller
     public function index()
     {
         $type = TypeVoiture::all();
+        if (sizeof($type) == 0) {
+            return $this->sendError('Type not found.');
+        }
         return $this->sendResponse(TypeVoitureResource::collection($type), 'fetch is called Successfully.');
     }
 
@@ -59,6 +62,10 @@ class TypeVoitureController extends Controller
      */
     public function update(TypeRequestUpdate $request, $id)
     {
+        $typeExist = TypeVoiture::where('id', $id)->exists();
+        if ($typeExist == null) {
+            return $this->sendError('Type is not exist.');
+        }
         $type = TypeVoiture::findOrFail($id);
         $type->update($request->all());
         return $this->sendResponse(new TypeVoitureResource($type), 'Type Updated Successfully.');
@@ -72,6 +79,10 @@ class TypeVoitureController extends Controller
      */
     public function destroy($id)
     {
+        $typeExist = TypeVoiture::where('id', $id)->exists();
+        if ($typeExist == null) {
+            return $this->sendError('Type is not exist.');
+        }
         $type = TypeVoiture::findOrFail($id);
         $type->delete();
         return $this->sendResponse([], 'type Deleted Successfully.');

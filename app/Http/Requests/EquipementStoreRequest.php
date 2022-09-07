@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class TypeRequestUpdate extends FormRequest
+class EquipementStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +23,8 @@ class TypeRequestUpdate extends FormRequest
      */
     public function rules()
     {
-        return 
-        [
-            "type"=>'required', Rule::unique('type_voitures')->ignore($this->type),
-            "photo_type_voiture"=>'required'
+        return [
+            'equipement' => 'required|unique:marque|max:255',
         ];
     }
 }

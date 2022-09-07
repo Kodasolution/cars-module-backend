@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TypeVoiture extends Model
+class Zone extends Model
 {
     use HasFactory;
-    protected $table="type_voitures";
-    protected $fillable = ['type','photo_type_voiture'];
+    protected $guarded=[];
+
 }
