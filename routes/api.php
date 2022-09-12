@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\AdresseController;
 use App\Http\Controllers\api\CommuneController;
 use App\Http\Controllers\api\EntrepriseController;
 use App\Http\Controllers\api\EquipementController;
@@ -23,6 +24,7 @@ use App\Models\TypeVoiture;
 |
  */
 Route::prefix("v1")->group(function () {
+    Route::apiResource("/adresse" ,AdresseController::class);
     Route::prefix("voiture")->group(function(){
         Route::apiResource("/marque", MarqueController::class);
         Route::apiResource("/modele",ModeleController::class);
