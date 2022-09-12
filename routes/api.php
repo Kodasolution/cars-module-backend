@@ -11,6 +11,7 @@ use App\Http\Controllers\api\ModeleController;
 use App\Http\Controllers\api\ParametreController;
 use App\Http\Controllers\api\ProvinceController;
 use App\Http\Controllers\api\TypeVoitureController;
+use App\Http\Controllers\api\VoitureController;
 use App\Models\TypeVoiture;
 
 /*
@@ -24,8 +25,9 @@ use App\Models\TypeVoiture;
 |
  */
 Route::prefix("v1")->group(function () {
-    Route::apiResource("/adresse" ,AdresseController::class);
     Route::prefix("voiture")->group(function(){
+        Route::apiResource("/automobile",VoitureController::class);
+        Route::apiResource("/adresse" ,AdresseController::class);
         Route::apiResource("/marque", MarqueController::class);
         Route::apiResource("/modele",ModeleController::class);
         Route::apiResource("/parametre",ParametreController::class);
