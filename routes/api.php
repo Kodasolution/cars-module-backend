@@ -40,5 +40,6 @@ Route::prefix("v1")->group(function () {
         Route::apiResource("/commune",CommuneController::class);
         Route::apiResource("/client",ClientController::class);
 
+
     });
 });
