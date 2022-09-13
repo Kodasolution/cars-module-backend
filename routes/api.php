@@ -26,6 +26,7 @@ use App\Models\TypeVoiture;
  */
 Route::prefix("v1")->group(function () {
     Route::prefix("voiture")->group(function(){
+        
         Route::apiResource("/automobile",VoitureController::class);
         Route::apiResource("/adresse" ,AdresseController::class);
         Route::apiResource("/marque", MarqueController::class);
