@@ -39,7 +39,6 @@ Route::prefix("v1")->group(function () {
         Route::apiResource("/province",ProvinceController::class);
         Route::apiResource("/commune",CommuneController::class);
         Route::apiResource("/client",ClientController::class);
-        
 
     });
 });
