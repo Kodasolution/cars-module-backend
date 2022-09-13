@@ -5,6 +5,7 @@ use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\CommuneController;
 use App\Http\Controllers\api\EntrepriseController;
 use App\Http\Controllers\api\EquipementController;
+use App\Http\Controllers\api\LocationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\MarqueController;
@@ -36,6 +37,8 @@ Route::prefix("v1")->group(function () {
         Route::apiResource("/entreprise",EntrepriseController::class);
         Route::apiResource("/province",ProvinceController::class);
         Route::apiResource("/commune",CommuneController::class);
+
+        Route::apiResource("/location",LocationController::class);
         
     });
 });
