@@ -35,9 +35,8 @@ class ClientController extends Controller
     public function store(ClientRequestStore $request)
     {
         $client = Client::create($request->all());
-        return $this->sendResponse(new Client($client), 'Client Created Successfully.');
-    
-        
+        return $this->sendResponse(new ClientResource($client), 'Client Created Successfully.');
+   
     }
 
     /**
