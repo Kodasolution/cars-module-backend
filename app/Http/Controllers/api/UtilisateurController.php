@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UtilisateurResquestStore;
-use App\Http\Requests\UtilisateurResquestUpdate;
-use App\Http\Resources\UtilisateurResource;
+use App\Models\Entreprise;
 use App\Models\Utilisateur;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UtilisateurResource;
+use App\Http\Requests\UtilisateurResquestStore;
+use App\Http\Requests\UtilisateurResquestUpdate;
 
 class UtilisateurController extends Controller
 {
@@ -35,6 +36,10 @@ class UtilisateurController extends Controller
      */
     public function store(UtilisateurResquestStore $request)
     {
+        $entrepriseExist = Entreprise::find( $request->entreprise_id);
+        if(is_null($entrepriseExist)){
+            return $this->sendError('entreprise_id not found.');
+        }
         $utilisateur = Utilisateur::create($request->all());
         return $this->sendResponse(new UtilisateurResource($utilisateur), 'Utilisateur Created Successfully.');
 
@@ -68,6 +73,10 @@ class UtilisateurController extends Controller
     public function update(UtilisateurResquestUpdate $request, $id)
     {
         $utilisateurExist = Utilisateur::where('id', $id)->exists();
+        $entrepriseExist = Entreprise::find( $request->entreprise_id);
+        if(is_null($entrepriseExist)){
+            return $this->sendError('entreprise_id not found.');
+        }
         if ($utilisateurExist == null) {
             return $this->sendError('Utilisateur is not exist.');
         }

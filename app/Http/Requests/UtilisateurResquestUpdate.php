@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UtilisateurResquestUpdate extends FormRequest
@@ -27,9 +28,11 @@ class UtilisateurResquestUpdate extends FormRequest
             "nom_utilisateur"=>"required",
             "prenom_utilisateur"=>"required",
             "telephone_utilisateur"=>"required",
-            "email_utilisateur"=>"required",
+            "email_utilisateur"=>'required', Rule::unique('utilisateurs')->ignore($this->email_utilisateur),
             "password"=>"required",
-            "role"=>"required"
+            "role"=>"required",
+            "entreprise_id"=>"required",
+
         ];
     }
 }

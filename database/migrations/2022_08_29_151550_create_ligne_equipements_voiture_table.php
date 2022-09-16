@@ -16,9 +16,9 @@ class CreateLigneEquipementsVoitureTable extends Migration
         Schema::create('ligne_equipements_voiture', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('equipement_id')->index();
-            $table->unsignedBigInteger('entreprise_id')->index();
+            $table->unsignedBigInteger('voiture_id')->index();
             $table->foreign('equipement_id')->references('id')->on('equipement')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('entreprise_id')->references('id')->on('entreprises')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('voiture_id')->references('id')->on('voiture')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
