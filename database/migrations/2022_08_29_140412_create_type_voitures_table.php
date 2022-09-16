@@ -16,6 +16,7 @@ class CreateTypeVoituresTable extends Migration
         Schema::create('type_voitures', function (Blueprint $table) {
             $table->id();
             $table->string("type");
+            $table->string("photo");
             $table->timestamps();
         });
     }

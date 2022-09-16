@@ -15,6 +15,8 @@ class AlterTypevoitureTable extends Migration
     {
         Schema::table('type_voitures', function (Blueprint $table) {
             $table->string('photo_type_voiture')->after('type');
+            $table->string("photo");
+            $table->timestamps();
         });
     }
 

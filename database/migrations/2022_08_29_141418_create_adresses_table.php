@@ -20,7 +20,9 @@ class CreateAdressesTable extends Migration
             $table->string("commune");
             $table->string("quartier")->nullable();
             $table->string("rue")->nullable();
-            $table->string("numero")->nullable();;
+            $table->string("numero")->nullable();
+            $table->string("latitude");
+            $table->string("longitude");            
             $table->timestamps();
         });
     }
