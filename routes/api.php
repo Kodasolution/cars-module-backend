@@ -29,6 +29,12 @@ Route::prefix("v1")->group(function () {
     Route::apiResource("/adresse" ,AdresseController::class);
     Route::apiResource("/client",ClientController::class);
     Route::prefix("voiture")->group(function(){
+<<<<<<< HEAD
+=======
+        
+        Route::apiResource("/automobile",VoitureController::class);
+        Route::apiResource("/adresse" ,AdresseController::class);
+>>>>>>> origin/fleury_dev
         Route::apiResource("/marque", MarqueController::class);
         Route::apiResource("/modele",ModeleController::class);
         Route::apiResource("/parametre",ParametreController::class);
