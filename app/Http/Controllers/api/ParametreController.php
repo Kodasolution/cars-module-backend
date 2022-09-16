@@ -84,6 +84,6 @@ class ParametreController extends Controller
         }
         $parametre = Parametre::findOrFail($id);
         $parametre->delete();
-        return $this->sendResponse([], 'Modele Deleted Successfully.');
+        return $this->sendResponse([], 'Parametre Deleted Successfully.');
     }
 }

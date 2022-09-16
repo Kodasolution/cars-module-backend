@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ClientRequestUpdate extends FormRequest
@@ -29,7 +30,8 @@ class ClientRequestUpdate extends FormRequest
             "telephone_client"=>"required|max:255",
             "password"=>"required|max:255",
             "actif"=>"required",
-            "email_client"=>"required|max:255"
+            "email_client"=>'required|email', Rule::unique('clients')->ignore($this->email_client),
+
         ];
     }
 }

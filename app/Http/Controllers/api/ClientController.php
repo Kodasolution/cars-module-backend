@@ -36,8 +36,7 @@ class ClientController extends Controller
     {
         $client = Client::create($request->all());
         return $this->sendResponse(new ClientResource($client), 'Client Created Successfully.');
-    
-        
+   
     }
 
     /**

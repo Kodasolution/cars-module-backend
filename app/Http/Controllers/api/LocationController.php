@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LocationRequestStore;
 use App\Http\Requests\LocationRequestUpdate;
 use App\Http\Resources\LocationResource;
+use App\Models\Client;
 use App\Models\Location;
 use Illuminate\Http\Request;
 
@@ -35,8 +36,11 @@ class LocationController extends Controller
      */
     public function store(LocationRequestStore $request)
     {
+        $clienttExist = Client::find( $request->client_id);
+        if(is_null($clienttExist)){
+            return $this->sendError('client_id not found.');
+        }
         $location = Location::create($request->all());
-        // return $marque;
         return $this->sendResponse(new LocationResource($location), 'Location Created Successfully.');
     }
 
@@ -64,8 +68,11 @@ class LocationController extends Controller
      */
     public function update(LocationRequestUpdate $request, $id)
     {
-        
         $locationExist=Location::where('id',$id)->exists();
+        $clienttExist = Client::find( $request->client_id);
+        if(is_null($clienttExist)){
+            return $this->sendError('client_id not found.');
+        }
         if ($locationExist == null) {
             return $this->sendError('Location is not exist.');
         }

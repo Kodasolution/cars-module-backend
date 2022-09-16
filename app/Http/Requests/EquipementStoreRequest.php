@@ -24,7 +24,7 @@ class EquipementStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'equipement' => 'required|unique:marque|max:255',
+            'equipement' => 'required|unique:equipement|max:255',
         ];
     }
 }
