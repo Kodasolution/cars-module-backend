@@ -27,8 +27,9 @@ class UtilisateurResquestStore extends FormRequest
             "nom_utilisateur"=>"required",
             "prenom_utilisateur"=>"required",
             "telephone_utilisateur"=>"required",
-            "email_utilisateur"=>"required",
+            "email_utilisateur"=>"required|email|unique:utilisateurs,email_utilisateur",
             "password"=>"required",
+            "entreprise_id"=>"required",
             "role"=>"required"
         ];
     }

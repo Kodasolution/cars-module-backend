@@ -25,7 +25,7 @@ class LigneEquipementsVoitureResquestStore extends FormRequest
     {
         return [
             "voiture_id"=>"required",
-            "entreprise_id"=>"required",
+            "equipement_id"=>"required",
         ];
     }
 }

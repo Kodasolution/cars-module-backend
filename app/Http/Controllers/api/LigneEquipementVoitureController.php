@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\LigneEquipementsVoitureResquestUpdate;
-use App\Http\Requests\LigneLocationVoitureResquestStore;
-use App\Http\Resources\LigneEquipementVoitureResource;
-use App\Models\LigneEquipementsVoiture;
+use App\Models\Voiture;
+use App\Models\Equipement;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\LigneEquipementsVoiture;
+use App\Http\Resources\LigneEquipementVoitureResource;
+use App\Http\Requests\LigneLocationVoitureResquestStore;
+use App\Http\Requests\LigneEquipementsVoitureResquestStore;
+use App\Http\Requests\LigneEquipementsVoitureResquestUpdate;
 
 class LigneEquipementVoitureController extends Controller
 {
@@ -32,8 +35,16 @@ class LigneEquipementVoitureController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(LigneLocationVoitureResquestStore $request)
+    public function store(LigneEquipementsVoitureResquestStore $request)
     {
+        $equipementExist = Equipement::find( $request->equipement_id);
+        $voitureExist = Voiture::find( $request->voiture_id);
+        if(is_null($equipementExist)){
+            return $this->sendError('equipement_id not found.');
+        }
+        if(is_null($voitureExist)){
+            return $this->sendError('voiture_id not found.');
+        }
         $ligneEquipementVoiture = LigneEquipementsVoiture::create($request->all());
         return $this->sendResponse(new LigneEquipementVoitureResource($ligneEquipementVoiture), 'Ligne Equipement Created Successfully.');
 
@@ -67,6 +78,14 @@ class LigneEquipementVoitureController extends Controller
     public function update(LigneEquipementsVoitureResquestUpdate $request, $id)
     {
         $ligneEquipementVoitureExist=LigneEquipementsVoiture::where('id',$id)->exists();
+        $equipementExist = Equipement::find( $request->equipement_id);
+        $voitureExist = Voiture::find( $request->voiture_id);
+        if(is_null($equipementExist)){
+            return $this->sendError('equipement_id not found.');
+        }
+        if(is_null($voitureExist)){
+            return $this->sendError('voiture_id not found.');
+        }
         if ($ligneEquipementVoitureExist == null) {
             return $this->sendError('Ligne equipement voiture that you want to update is not exist.');
         }

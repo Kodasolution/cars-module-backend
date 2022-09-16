@@ -23,6 +23,7 @@ class VoitureController extends Controller
     public function index()
     {
         $voiture = Voiture::all();
+        return $voiture;
         if (sizeof($voiture) == 0) {
             return $this->sendError('Voiture not found.');
         }
@@ -83,6 +84,22 @@ class VoitureController extends Controller
     public function update(VoitureUpdateRequest $request, $id)
     {
         $voitureExist = Voiture::where('id', $id)->exists();
+        $ModelExist = Modele::find( $request->model_id);
+        $entrepriseExist = Entreprise::find( $request->entreprise_id);
+        $adresseExist = Adresse::find( $request->adresse_id);
+        $typeExist = TypeVoiture::find( $request->type_voiture_id);
+        if(is_null($ModelExist)){
+            return $this->sendError('model_id not found.');
+        }
+        if(is_null($entrepriseExist)){
+            return $this->sendError('entreprise_id not found.');
+        }
+        if(is_null($adresseExist)){
+            return $this->sendError('adresse_id not found.');
+        }
+        if(is_null($typeExist)){
+            return $this->sendError('type_voiture_id not found.');
+        }
         if ($voitureExist == null) {
             return $this->sendError('Voiture is not exist.');
         }

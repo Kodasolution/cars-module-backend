@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class LigneLocationVoiture extends Model
 {
     use HasFactory;
+    protected $table="ligne_location_voiture";
     protected $fillable = ['date_debut','nombre_jrs','date_fin','voiture_id','location_id'];
 }

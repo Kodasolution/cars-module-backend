@@ -24,7 +24,7 @@ class LocationRequestUpdate extends FormRequest
     public function rules()
     {
         return [
-            "date_location"=>"required|max:255",
+            "date_location"=>"required|date|date_format:Y-m-d|after_or_equal:today",
             "montant_total"=>"required|max:255",
             "client_id"=>"required"
         ];

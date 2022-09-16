@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Models\Voiture;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\LigneLocationVoiture;
+use App\Http\Resources\LigneLocationVoitureResource;
 use App\Http\Requests\LigneLocationVoitureResquestStore;
 use App\Http\Requests\LigneLocationVoitureResquestUpdate;
-use App\Http\Resources\LigneLocationVoitureResource;
-use App\Models\LigneLocationVoiture;
-use Illuminate\Http\Request;
+use App\Models\Location;
+use Carbon\Carbon;
 
 class LigneLocationVoitureController extends Controller
 {
@@ -34,6 +37,20 @@ class LigneLocationVoitureController extends Controller
      */
     public function store(LigneLocationVoitureResquestStore $request)
     {
+        $start_date=$request->date_debut;
+        $end_date=$request->date_fin;
+        $nbr_days= Carbon::parse($start_date)->diffInDays(Carbon::parse($end_date));
+        if($nbr_days != $request->nombre_jrs){
+            return $this->sendError('Nombre de jrs pas egal a la diff entre debut et fin .');
+        }
+        $voitureExist = Voiture::find( $request->voiture_id);
+        if(is_null($voitureExist)){
+               return $this->sendError('voiture_id not found.');
+           }
+        $locationExist = Location::find( $request->location_id);
+        if(is_null($locationExist)){
+               return $this->sendError('location_id not found.');
+           }
         $ligneLocationVoiture = LigneLocationVoiture::create($request->all());
         return $this->sendResponse(new LigneLocationVoitureResource($ligneLocationVoiture), 'Ligne voiture location Created Successfully.');
 
@@ -68,6 +85,20 @@ class LigneLocationVoitureController extends Controller
         if ($ligneLocationVoitureExist == null) {
             return $this->sendError('Ligne location voiture that you want to update is not exist.');
         }
+        $start_date=$request->date_debut;
+        $end_date=$request->date_fin;
+        $nbr_days= Carbon::parse($start_date)->diffInDays(Carbon::parse($end_date));
+        if($nbr_days != $request->nombre_jrs){
+            return $this->sendError('Nombre de jrs pas egal a la diff entre debut et fin .');
+        }
+        $voitureExist = Voiture::find( $request->voiture_id);
+        if(is_null($voitureExist)){
+               return $this->sendError('voiture_id not found.');
+           }
+        $locationExist = Location::find( $request->location_id);
+        if(is_null($locationExist)){
+               return $this->sendError('location_id not found.');
+           }
         $ligneLocationVoiture = LigneLocationVoiture::findOrFail($id);
         $ligneLocationVoiture->update($request->all());
         return $this->sendResponse(new LigneLocationVoitureResource($ligneLocationVoiture), 'Ligne location voiture Updated Successfully.');

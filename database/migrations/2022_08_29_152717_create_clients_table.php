@@ -20,7 +20,7 @@ class CreateClientsTable extends Migration
             $table->string("email_client")->unique();
             $table->integer("telephone_client");
             $table->string("password");
-            $table->boolean("actif");
+            $table->boolean("actif")->default(0);
             $table->timestamps();
         });
     }

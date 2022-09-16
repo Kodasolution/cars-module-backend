@@ -24,9 +24,9 @@ class LigneLocationVoitureResquestUpdate extends FormRequest
     public function rules()
     {
         return [
-            "date_debut"=>"required",
+            "date_debut"=>"required|date|date_format:Y-m-d|before_or_equal:today",
             "nombre_jrs"=>"required",
-            "date_fin"=>"required",
+            "date_fin"=>"required|date|date_format:Y-m-d|after_or_equal:date_debut",
             "voiture_id"=>"required",
             "location_id"=>"required"
         ];
