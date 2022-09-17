@@ -28,11 +28,11 @@ class EntrepriseRequestStore extends FormRequest
             "email_entreprise"=>"required|email",
             "telephone_entreprise"=>"required",
             "logo_entreprise"=>"",
-            "adresse_entreprise"=>"required",
+            "adresse_id"=>"required",
             "nif_entreprise"=>"required",
             "type_entreprise"=>"required",
             "actif"=>"",
-            "latitude"=>""
+
         ];
     }
 }

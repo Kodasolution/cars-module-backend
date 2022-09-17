@@ -25,7 +25,8 @@ class MarqueRequestUpdate extends FormRequest
     public function rules()
     {
         return [
-            "marque"=>'required', Rule::unique('marque')->ignore($this->marque)
+            "marque"=>'required', Rule::unique('marque')->ignore($this->marque),
+            "logo_marque"=>"required"
         ];
     }
 }

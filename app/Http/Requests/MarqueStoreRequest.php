@@ -26,6 +26,7 @@ class MarqueStoreRequest extends FormRequest
         return
             [
             'marque' => 'required|unique:marque|max:255',
+            "logo_marque"=>"required"
         ];
     }
 }

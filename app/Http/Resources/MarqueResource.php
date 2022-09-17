@@ -16,7 +16,8 @@ class MarqueResource extends JsonResource
     {
         return [
             "id"=>$this->id,
-            "marque"=>$this->marque
+            "marque"=>$this->marque,
+            "logo_marque"=>$this->logo_marque
         ];
     }
 }

@@ -17,10 +17,13 @@ class CreateAdressesTable extends Migration
             $table->id();
             $table->string("pays");
             $table->string("province");
-            $table->string("commune");
+            $table->string("commune");            
+            $table->string("zone");            
             $table->string("quartier")->nullable();
             $table->string("rue")->nullable();
-            $table->string("numero")->nullable();;
+            $table->string("numero")->nullable();
+            $table->string("latitude")->nullable();
+            $table->string("longitude")->nullable();
             $table->timestamps();
         });
     }

@@ -18,6 +18,8 @@ use App\Http\Controllers\api\TypeVoitureController;
 use App\Http\Controllers\api\UtilisateurController;
 use App\Http\Controllers\api\LigneEquipementVoitureController;
 use App\Http\Controllers\api\LigneLocationVoitureController;
+use App\Http\Controllers\api\LocationEntrepriseController;
+use App\Http\Controllers\api\PhotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +46,8 @@ Route::prefix("v1")->group(function () {
         Route::apiResource("/province",ProvinceController::class);
         Route::apiResource("/commune",CommuneController::class);
         Route::apiResource("/location",LocationController::class);
+        Route::apiResource("/photo",PhotoController::class);
+        Route::apiResource("/location-entreprise",LocationEntrepriseController::class);
         Route::apiResource("/ligne-equipement-voiture",LigneEquipementVoitureController::class);
         Route::apiResource("/ligne-location-voiture",LigneLocationVoitureController::class);
     });

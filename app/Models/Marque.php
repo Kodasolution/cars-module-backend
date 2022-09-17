@@ -9,5 +9,5 @@ class Marque extends Model
 {
     use HasFactory;
     protected $table="marque";
-    protected $fillable = ['marque'];
+    protected $fillable = ['marque','logo_marque'];
 }

@@ -33,8 +33,8 @@ class MarqueController extends Controller
      */
     public function store(MarqueStoreRequest $request)
     {
+        // return $request->all();
         $marque = Marque::create($request->all());
-        // return $marque;
         return $this->sendResponse(new MarqueResource($marque), 'Marque Created Successfully.');
     }
 
