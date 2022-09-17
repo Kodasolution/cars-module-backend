@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Photos;
+use App\Models\Location;
 use App\Models\Equipement;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,5 +32,15 @@ class Voiture extends Model
     public function Equipements()
     {
         return $this->belongsToMany(Equipement::class, 'ligne_equipements_voiture', 'equipement_id', 'voiture_id');
+    }
+
+    /**
+     * The Locations that belong to the Voiture
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function Locations()
+    {
+        return $this->belongsToMany(Location::class, 'ligne_location_voiture', 'location_id', 'voiture_id');
     }
 }

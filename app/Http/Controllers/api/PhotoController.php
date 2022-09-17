@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\PhotoResquestUpdate;
-use App\Http\Resources\PhotoResource;
 use App\Models\Photos;
+use App\Models\Voiture;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PhotoResquestStore;
+use App\Http\Resources\PhotoResource;
+use App\Http\Requests\PhotoResquestUpdate;
 
 class PhotoController extends Controller
 {
@@ -31,8 +33,12 @@ class PhotoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PhotoResquestStore $request)
     { 
+        $voitureExist = Voiture::find( $request->voiture_id);
+        if(is_null($voitureExist)){
+               return $this->sendError('voiture_id not found.');
+           }
         $photo = Photos::create($request->all());
         return $this->sendResponse(new PhotoResource($photo), 'Photo added Successfully.');
     
@@ -64,6 +70,10 @@ class PhotoController extends Controller
     public function update(PhotoResquestUpdate $request, $id)
     {
         $photoExist=Photos::where('id',$id)->exists();
+        $voitureExist = Voiture::find( $request->voiture_id);
+        if(is_null($voitureExist)){
+               return $this->sendError('voiture_id not found.');
+           }
         if ($photoExist == null) {
             return $this->sendError('Photos that you want to update is not exist.');
         }

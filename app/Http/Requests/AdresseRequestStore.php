@@ -27,7 +27,8 @@ class AdresseRequestStore extends FormRequest
             "pays"=>"required|max:255",
             "province"=>"required|max:255",
             "commune"=>"required|max:255",
-            "quartier"=>"required|max:255"
+            "zone"=>"required|max:255",
+            "quartier"=>"required|max:255",         
         ];
     }
 }

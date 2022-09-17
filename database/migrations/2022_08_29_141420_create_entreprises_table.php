@@ -19,11 +19,11 @@ class CreateEntreprisesTable extends Migration
             $table->string("email_entreprise");
             $table->integer("telephone_entreprise");
             $table->string("logo_entreprise")->nullable();
-            $table->string("adresse_entreprise");
             $table->string("nif_entreprise")->nullable();
             $table->string("type_entreprise");
             $table->boolean("actif")->default(0);
-            $table->string("latitude")->nullable();
+            $table->unsignedBigInteger('adresse_id')->index();
+            $table->foreign('adresse_id')->references('id')->on('adresses')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

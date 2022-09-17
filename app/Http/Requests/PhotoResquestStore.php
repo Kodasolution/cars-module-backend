@@ -26,7 +26,7 @@ class PhotoResquestStore extends FormRequest
         return [
             "voiture_id"=>"required",
             "url_photo"=>"required",
-            "principale"=>"require"
+            "principale"=>"boolean"
         ];
     }
 }

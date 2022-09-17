@@ -9,5 +9,5 @@ class Adresse extends Model
 {
     use HasFactory;
     protected $table="adresses";
-    protected $fillable = ['pays','province','commune','quartier','rue','numero'];
+    protected $fillable = ['pays','province','commune','zone','quartier','rue','numero'];
 }

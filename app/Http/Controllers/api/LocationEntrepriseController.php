@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Models\Location;
+use App\Models\Entreprise;
+use Illuminate\Http\Request;
+use App\Models\LocationEntreprise;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\LocationEntrepriseResource;
 use App\Http\Requests\LocationEntrepriseResquestStore;
 use App\Http\Requests\LocationEntrepriseResquestUpdate;
-use App\Http\Resources\LocationEntrepriseResource;
-use App\Models\LocationEntreprise;
-use Illuminate\Http\Request;
 
 class LocationEntrepriseController extends Controller
 {
@@ -33,6 +35,14 @@ class LocationEntrepriseController extends Controller
      */
     public function store(LocationEntrepriseResquestStore $request)
     {
+        $locationExist = Location::find( $request->location_id);
+        $entrepriseExist = Entreprise::find( $request->entreprise_id);
+        if(is_null($entrepriseExist)){
+                return $this->sendError('entreprise_id not found.');
+            }
+        if(is_null($locationExist)){
+               return $this->sendError('location_id not found.');
+           }
         $locationEntreprise = LocationEntreprise::create($request->all());
         // return $marque;
         return $this->sendResponse(new LocationEntrepriseResource($locationEntreprise), 'Location Created Successfully.');
@@ -66,6 +76,14 @@ class LocationEntrepriseController extends Controller
     public function update(LocationEntrepriseResquestUpdate $request, $id)
     {
         $locationEntrepriseExist=LocationEntreprise::where('id',$id)->exists();
+        $locationExist = Location::find( $request->location_id);
+        $entrepriseExist = Entreprise::find( $request->entreprise_id);
+        if(is_null($entrepriseExist)){
+                return $this->sendError('entreprise_id not found.');
+            }
+        if(is_null($locationExist)){
+               return $this->sendError('location_id not found.');
+           }
         if ($locationEntrepriseExist == null) {
             return $this->sendError('Location is not exist.');
         }

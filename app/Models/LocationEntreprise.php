@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class LocationEntreprise extends Model
 {
     use HasFactory;
+    protected $table="location_entreprise";
     protected $fillable = ['date_location','montant_total','entreprise_id','location_id'];
 }

@@ -1,0 +1,26 @@
+A corriger dans endpoints:
+
+1.type de voitures:
+     -upload des photos
+     -changer route type en typevoiture 
+2.marque:
+    -upload des photos
+   -Ajouter champ photo dans table marque
+3.equipement:
+   -post affiche message d'erreur Server Error
+4.entreprise
+  -upload des photos
+-Ajouter champ id_adresse dans table entreprise 
+-Mettre les champs latitude et longitude dans table adresse
+-Dans post il y a pas infos de l'admin(nom, prénom, téléphone, email, principal) 
+-Fonctions pour activer ou désactiver une entreprise 
+-Fonction détails retournant les infos détaillées de l'entreprise (identification entreprise, adresse, infos de l'admin principal) 
+
+5.automobile (voiture) 
+   -upload des photos 
+  -post, get, put, delete affiche message d'erreur Server Error
+-Ajouter fonction détails retournant tous les infos de la voiture(photos, équipements, caractéristiques) 
+-Ajouter fonction retournant la liste des voitures de l'agence de l'utilisateur authentifié 
+-Ajouter fonctions pour mettre ou retirer une voiture en location 
+-Ajouter fonction retournant la liste des voitures en attente de validation 
+-Ajouter des fonctions pour Approuver ou rejeter une voiture avec motif
