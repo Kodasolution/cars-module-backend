@@ -19,6 +19,7 @@ use App\Http\Controllers\api\UtilisateurController;
 use App\Http\Controllers\api\LigneEquipementVoitureController;
 use App\Http\Controllers\api\LigneLocationVoitureController;
 use App\Http\Controllers\api\LocationEntrepriseController;
+use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\PhotoController;
 
 /*
@@ -31,7 +32,7 @@ use App\Http\Controllers\api\PhotoController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
-Route::prefix("v1")->group(function () {
+Route::group(['middleware' => ['auth:sanctum',"super_admins"],'prefix'=>'v1'],function () {
     Route::apiResource("/adresse" ,AdresseController::class);
     Route::apiResource("/client",ClientController::class);
     Route::apiResource("/utilisateur",UtilisateurController::class);
@@ -52,3 +53,5 @@ Route::prefix("v1")->group(function () {
         Route::apiResource("/ligne-location-voiture",LigneLocationVoitureController::class);
     });
 });
+Route::post("/register",[LoginController::class,'Register']);
+Route::post("/login",[LoginController::class,'Login']);

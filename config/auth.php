@@ -40,6 +40,24 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'users' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ],
+    
+        'clients' => [
+            'driver' => 'sanctum',
+            'provider' => 'clients',
+        ],
+    
+        'admins' => [
+            'driver' => 'sanctum',
+            'provider' => 'admins',
+        ],
+        'super_admins' => [
+            'driver' => 'sanctum',
+            'provider' => 'super_admins',
+        ],
     ],
 
     /*
@@ -65,10 +83,18 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+        'clients' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Client::class,
+        ],
+        'super_admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\SuperAdmin::class,
+        ],
     ],
 
     /*
