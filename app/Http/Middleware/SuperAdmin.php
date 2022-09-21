@@ -15,17 +15,14 @@ class SuperAdmin
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, $txt)
     {
-        if (Auth::user()->role === "super_admin") {
-            return $next($request);
-        } else {
-            return response()->json(
-                [
-                    "status" => "404",
-                    "message" => "vous n'est pas autorise",
-                ]
-            );
+        $txt_arr = explode("|", $txt);
+        foreach ($txt_arr as $r) {
+            if (strtolower(Auth::user()->role) === strtolower($r)) {
+                return $next($request);
+            }
         }
+        return response()->json(['error' => 'Unauthenticated.'], 403);
     }
 }
