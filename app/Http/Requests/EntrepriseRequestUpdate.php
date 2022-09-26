@@ -32,7 +32,7 @@ class EntrepriseRequestUpdate extends FormRequest
             "adresse_id"=>"required",
             "nif_entreprise"=>"required",
             "type_entreprise"=>"required",
-            "actif"=>"",
+            "actif"=>"boolean",
         ];
     }
 }

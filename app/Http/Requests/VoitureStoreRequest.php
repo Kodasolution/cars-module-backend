@@ -40,6 +40,7 @@ class VoitureStoreRequest extends FormRequest
             "model_id" => "required",
             "adresse_id" => "required",
             "entreprise_id" => "required",
+            "marque_id"=>"required",
             "valide" => 'boolean',
             "en_location" => 'boolean',
             "active" => 'boolean',

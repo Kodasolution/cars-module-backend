@@ -17,7 +17,7 @@ class Equipement extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function Voitures()
+    public function voitures()
     {
         return $this->belongsToMany(Voiture::class, 'ligne_equipements_voiture', 'voiture_id', 'equipement_id');
     }

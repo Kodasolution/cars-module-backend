@@ -2,9 +2,14 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\PhotoResource;
+use App\Http\Resources\MarqueResource;
+use App\Http\Resources\ModeleResource;
+use App\Http\Resources\EquipementResource;
+use App\Http\Resources\TypeVoitureResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class VoitureResource extends JsonResource
+class AgenceVoitureResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,7 +19,8 @@ class VoitureResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        return 
+        [
             "id"=>$this->id,
             "active"=>$this->active,
             "annee_de_fabrication"=>$this->annee_de_fabrication,
@@ -26,11 +32,7 @@ class VoitureResource extends JsonResource
             "couleur"=>$this->couleur,
             "created_at"=>$this->created_at,
             "en_location"=>$this->en_location,
-            "entreprise_id"=>$this->entreprise_id,
-            "adresse_id"=>$this->adresse_id,
             "kilometrage"=>$this->kilometrage,
-            "model_id"=>$this->model_id,
-            "marque_id"=>$this->marque_id,
             "nom_voiture"=>$this->nom_voiture,
             "nombre_places"=>$this->nombre_places,
             "nombre_portes"=>$this->nombre_portes,
@@ -39,11 +41,17 @@ class VoitureResource extends JsonResource
             "poids"=>$this->poids,
             "prix"=>$this->prix,
             "slug_nom_vehicule"=>$this->slug_nom_vehicule,
-            "type_voiture_id"=>$this->type_voiture_id,
             "updated_at"=>$this->updated_at,
             "valide"=>$this->valide,
             "volant"=>$this->volant,
             "version"=>$this->version,
+            "adresse_id"=>$this->adresse_id,
+            "entreprise_id"=>$this->entreprise_id,
+            "photo"=>PhotoResource::collection($this->photos),
+            "type_voiture"=>new TypeVoitureResource($this->type),
+            "modele"=>new ModeleResource($this->modele),
+            "marque_id"=>new MarqueResource($this->marque),
+            "equipement"=> EquipementResource::collection($this->equipements)
         ];
     }
 }

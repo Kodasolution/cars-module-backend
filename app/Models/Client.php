@@ -25,4 +25,6 @@ class Client extends Model
     {
         return $this->hasMany(Location::class, 'client_id');
     }
+
+    
 }

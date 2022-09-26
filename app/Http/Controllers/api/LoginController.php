@@ -38,7 +38,6 @@ class LoginController extends Controller
                 }
             } elseif ($request->role == "super_admin") {
                 $user = User::create($request->all());
-
                 $user_id = DB::getPdo()->lastInsertId();
                 SuperAdmin::create([
                     "user_id" => $user_id,
@@ -56,12 +55,12 @@ class LoginController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             return $this->sendError('error in creating user');
-
         }
     }
 
     public function Login(Request $request)
     {
+        // return Auth::guard('super_admins')->user()->email;
         $data = $request->validate([
             "email" => "required|email",
             "password" => "required",

@@ -24,13 +24,14 @@ class UtilisateurResquestStore extends FormRequest
     public function rules()
     {
         return [
-            "nom_utilisateur"=>"required",
-            "prenom_utilisateur"=>"required",
-            "telephone_utilisateur"=>"required",
-            "email_utilisateur"=>"required|email|unique:utilisateurs,email_utilisateur",
-            "password"=>"required",
-            "entreprise_id"=>"required",
-            "role"=>"required"
+            'nom'=>"required|max:255",
+            "prenom"=>"required",
+            'email'=>"required|email|unique:users,email",
+            "phone"=>"required",
+            'password'=>"required",
+            'role'=>'required',
+            'entreprise'=>''
+
         ];
     }
 }

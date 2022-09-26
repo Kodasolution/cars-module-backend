@@ -5,13 +5,16 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VoitureStoreRequest;
 use App\Http\Requests\VoitureUpdateRequest;
+use App\Http\Resources\VoitureByAgenceResource;
 use App\Http\Resources\VoitureResource;
+use App\Http\Resources\VoitureResourceDetail;
 use App\Models\Adresse;
 use App\Models\Entreprise;
 use App\Models\Modele;
 use App\Models\TypeVoiture;
 use App\Models\Voiture;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VoitureController extends Controller
 {
@@ -23,7 +26,6 @@ class VoitureController extends Controller
     public function index()
     {
         $voiture = Voiture::all();
-        return $voiture;
         if (sizeof($voiture) == 0) {
             return $this->sendError('Voiture not found.');
         }
@@ -38,20 +40,20 @@ class VoitureController extends Controller
      */
     public function store(VoitureStoreRequest $request)
     {
-        $ModelExist = Modele::find( $request->model_id);
-        $entrepriseExist = Entreprise::find( $request->entreprise_id);
-        $adresseExist = Adresse::find( $request->adresse_id);
-        $typeExist = TypeVoiture::find( $request->type_voiture_id);
-        if(is_null($ModelExist)){
+        $ModelExist = Modele::find($request->model_id);
+        $entrepriseExist = Entreprise::find($request->entreprise_id);
+        $adresseExist = Adresse::find($request->adresse_id);
+        $typeExist = TypeVoiture::find($request->type_voiture_id);
+        if (is_null($ModelExist)) {
             return $this->sendError('model_id not found.');
         }
-        if(is_null($entrepriseExist)){
+        if (is_null($entrepriseExist)) {
             return $this->sendError('entreprise_id not found.');
         }
-        if(is_null($adresseExist)){
+        if (is_null($adresseExist)) {
             return $this->sendError('adresse_id not found.');
         }
-        if(is_null($typeExist)){
+        if (is_null($typeExist)) {
             return $this->sendError('type_voiture_id not found.');
         }
         $voiture = Voiture::create($request->all());
@@ -66,7 +68,7 @@ class VoitureController extends Controller
      */
     public function show($id)
     {
-    
+
         $voiture = Voiture::find($id);
         if (is_null($voiture)) {
             return $this->sendError('Voiture not found.');
@@ -84,20 +86,20 @@ class VoitureController extends Controller
     public function update(VoitureUpdateRequest $request, $id)
     {
         $voitureExist = Voiture::where('id', $id)->exists();
-        $ModelExist = Modele::find( $request->model_id);
-        $entrepriseExist = Entreprise::find( $request->entreprise_id);
-        $adresseExist = Adresse::find( $request->adresse_id);
-        $typeExist = TypeVoiture::find( $request->type_voiture_id);
-        if(is_null($ModelExist)){
+        $ModelExist = Modele::find($request->model_id);
+        $entrepriseExist = Entreprise::find($request->entreprise_id);
+        $adresseExist = Adresse::find($request->adresse_id);
+        $typeExist = TypeVoiture::find($request->type_voiture_id);
+        if (is_null($ModelExist)) {
             return $this->sendError('model_id not found.');
         }
-        if(is_null($entrepriseExist)){
+        if (is_null($entrepriseExist)) {
             return $this->sendError('entreprise_id not found.');
         }
-        if(is_null($adresseExist)){
+        if (is_null($adresseExist)) {
             return $this->sendError('adresse_id not found.');
         }
-        if(is_null($typeExist)){
+        if (is_null($typeExist)) {
             return $this->sendError('type_voiture_id not found.');
         }
         if ($voitureExist == null) {
@@ -123,5 +125,39 @@ class VoitureController extends Controller
         $voiture = Voiture::findOrFail($id);
         $voiture->delete();
         return $this->sendResponse([], 'Voiture Deleted Successfully.');
+    }
+    public function voitureDetail()
+    {
+        $voiture = Voiture::all();
+        if (sizeof($voiture) == 0) {
+            return $this->sendError('Voiture not found.');
+        }
+        return $this->sendResponse(VoitureResourceDetail::collection($voiture), 'Voiture Updated Successfully.');
+
+    }
+    public function voitureDetailOne($id)
+    {
+        $voitureExist = Voiture::where('id', $id)->exists();
+        if ($voitureExist == null) {
+            return $this->sendError('Voiture is not exist.');
+        }
+        $voiture = Voiture::findOrFail($id);
+        return $this->sendResponse(new VoitureResourceDetail($voiture), 'Voiture Updated Successfully.');
+
+    }
+
+    public function voitureByAgence()
+    {
+        if (Auth::check() && Auth::user()->role === "admin") {
+            $entrepriseExist = Entreprise::where('id', Auth::user()->id)->exists();
+            if ($entrepriseExist == null) {
+                return $this->sendError('Entreprise is not exist.');
+            }
+            $entreprise = Entreprise::findOrFail(Auth::user()->id);
+            return $this->sendResponse(new VoitureByAgenceResource($entreprise), 'all voiture by agences.');
+        } else {
+            return $this->sendError('not connect Login plz.');
+
+        }
     }
 }
