@@ -25,13 +25,7 @@ class ClientRequestUpdate extends FormRequest
     public function rules()
     {
         return [
-            "nom_client"=>"required|max:255",
-            "prenom_client"=>"required|max:255",
-            "telephone_client"=>"required|max:255",
-            "password"=>"required|max:255",
-            "actif"=>"required",
-            "email_client"=>'required|email', Rule::unique('clients')->ignore($this->email_client),
-
+            "user_id"=>"required|max:255",
         ];
     }
 }

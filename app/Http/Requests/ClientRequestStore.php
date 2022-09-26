@@ -24,12 +24,7 @@ class ClientRequestStore extends FormRequest
     public function rules()
     {
         return [
-            "nom_client"=>"required|max:255",
-            "prenom_client"=>"required|max:255",
-            "telephone_client"=>"required|max:255",
-            "password"=>"required|max:255",
-            "actif"=>"required",
-            "email_client"=>"required|unique:clients|max:255"
+            "user_id"=>"required|max:255",
         ];
     }
 }

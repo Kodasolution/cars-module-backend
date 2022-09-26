@@ -24,3 +24,15 @@ A corriger dans endpoints:
 -Ajouter fonctions pour mettre ou retirer une voiture en location 
 -Ajouter fonction retournant la liste des voitures en attente de validation 
 -Ajouter des fonctions pour Approuver ou rejeter une voiture avec motif
+
+
+
+www.afribaba.bi
+Achetez, vendez, louez et échangez en toute sécurité ! Rencontrez en personne le vendeur ou l'acheteur !
+Achat, Vente, Location, les Bonnes affaires près de chez vous en allant des voitures d'occasions aux appartements, maisons, ordinateurs et téléphones mobiles, ou Chercher un Emploi, Logement, Services
+
+Avez-vous quelque chose à vendre, à louer, un service à offrir ou une offre d'emploi?  
+
+Ajoutez vos annonces sur ushakiki.bi, c'est  super rapide, facile et fiable
+Vendez, Proposez, Louez, Recherchez, Achetez tout ce que vous voulez .Desirez Vous un Appartements à louer ou a vendre - Locations des Voitures ou Vendre 
+un appareil electronique a ? Déposez votre CV en ligne dans la section de recherche d'emploi de afribaba.bi 100% gratuit.

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AdresseController;
+use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\CommuneController;
 use App\Http\Controllers\api\EntrepriseController;
 use App\Http\Controllers\api\EquipementController;
@@ -29,27 +31,36 @@ use Illuminate\Support\Facades\Route;
 |
  */
 Route::group(['prefix' => 'v1'], function () {
-    Route::group(['middleware' => ['auth:sanctum', "super_admins:super_admin"]], function () {
-        Route::apiResource("/adresse", AdresseController::class);
-        // Route::apiResource("/client", ClientController::class);
-        // Route::apiResource("/utilisateur", UtilisateurController::class);
+    Route::group(['prefix' => 'admin'], function () {
+        Route::group(['middleware' => ['auth:sanctum', "super_admins:super_admin"]], function () {
+            Route::apiResource("/voiture/marque", MarqueController::class);
+            Route::apiResource("/voiture/modele", ModeleController::class);
+            Route::apiResource("/voiture/parametre", ParametreController::class);
+            Route::apiResource("/voiture/type", TypeVoitureController::class);
+            Route::apiResource("/voiture/equipement", EquipementController::class);
+            Route::apiResource("/province", ProvinceController::class);
+            Route::apiResource("/commune", CommuneController::class);
+            Route::apiResource("/adresse", AdresseController::class);
+            Route::apiResource("/entreprise", EntrepriseController::class);
+            Route::patch("/entreprise/change-status/{id}",[EntrepriseController::class,'changeStatusEntreprise'])->name("entreprise.change.status");
+            Route::get("/entreprise/by-status/{status}",[EntrepriseController::class,'EntrepriseByStatus'])->name("entreprise.by.status");
+            Route::get("/entreprise-detail",[EntrepriseController::class,'DetailEntreprise'])->name('entreprise.detatail.all');
+            Route::get("/entreprise-detail/{id}",[EntrepriseController::class,'DetailOneEntreprise'])->name('entreprise.detatail.one');
+            Route::apiResource("/manager", AdminController::class);
+        });
+        Route::group(['middleware' => ['auth:sanctum', 'super_admins:super_admin|admin']], function () {
+            Route::apiResource("/voiture", VoitureController::class);
+            Route::get("/voiture-detail",[VoitureController::class,'voitureDetail']);
+            Route::get("/voiture-detail/{id}",[VoitureController::class,'voitureDetailOne']);
+            Route::get("/voiture-by-entreprise",[VoitureController::class,'voitureByAgence']);
+            Route::apiResource("/voiture/photo", PhotoController::class);
+            Route::apiResource("/voiture/ligne/equipement", LigneEquipementVoitureController::class);
+            Route::apiResource("/voiture/ligne-location-voiture", LigneLocationVoitureController::class);
+            Route::apiResource("/client", ClientController::class);
+            Route::apiResource("/location", LocationController::class);
+            Route::apiResource("/location-entreprise", LocationEntrepriseController::class);
+        });
+        Route::post("/register", [LoginController::class, 'Register']);
+        Route::post("/login", [LoginController::class, 'Login']);
     });
-    Route::group(["prefix" => "voiture", 'middleware' => ['auth:sanctum', 'super_admins:super_admin|admin']], function () {
-        Route::apiResource("/automobile", VoitureController::class);
-        Route::apiResource("/marque", MarqueController::class);
-        Route::apiResource("/modele", ModeleController::class);
-        Route::apiResource("/parametre", ParametreController::class);
-        Route::apiResource("/type", TypeVoitureController::class);
-        Route::apiResource("/equipement", EquipementController::class);
-        Route::apiResource("/entreprise", EntrepriseController::class);
-        Route::apiResource("/province", ProvinceController::class);
-        Route::apiResource("/commune", CommuneController::class);
-        Route::apiResource("/location", LocationController::class);
-        Route::apiResource("/photo", PhotoController::class);
-        Route::apiResource("/location-entreprise", LocationEntrepriseController::class);
-        Route::apiResource("/ligne-equipement-voiture", LigneEquipementVoitureController::class);
-        Route::apiResource("/ligne-location-voiture", LigneLocationVoitureController::class);
-    });
-    Route::post("/register", [LoginController::class, 'Register']);
-    Route::post("/login", [LoginController::class, 'Login']);
 });

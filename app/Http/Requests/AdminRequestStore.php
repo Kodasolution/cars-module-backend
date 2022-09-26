@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EntrepriseRequestStore extends FormRequest
+class AdminRequestStore extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,9 @@ class EntrepriseRequestStore extends FormRequest
     public function rules()
     {
         return [
-            "nom_entreprise"=>"required|unique:entreprises|max:255",
-            "email_entreprise"=>"required|email",
-            "telephone_entreprise"=>"required",
-            "logo_entreprise"=>"",
-            "adresse_id"=>"required",
-            "nif_entreprise"=>"required",
-            "type_entreprise"=>"required",
-            "actif"=>"boolean",
-
+            "user_id"=>"required|max:255",
+            "entreprise_id"=>"required|max:255",
+            "principale"=>"boolean"
         ];
     }
 }

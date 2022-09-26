@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ClientRequestStore;
-use App\Http\Requests\ClientRequestUpdate;
-use App\Http\Resources\ClientResource;
+use App\Models\User;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\AdminResource;
+use App\Http\Resources\ClientResource;
+use App\Http\Requests\ClientRequestStore;
+use App\Http\Requests\ClientRequestUpdate;
 
 class ClientController extends Controller
 {
@@ -34,9 +36,20 @@ class ClientController extends Controller
      */
     public function store(ClientRequestStore $request)
     {
+        $userExist = User::find( $request->user_id);
+        if(is_null($userExist)){
+            return $this->sendError('user_id not found.');
+        }
+        $user=User::where('id',$request->user_id)->first();
+        $clientExist= Client::where('user_id',$user->id)->first();
+        if($clientExist){
+            return $this->sendError('client is already exist.');
+        }
+        if($user->role !== "client" ){
+            return $this->sendError("this user is not client");
+        }
         $client = Client::create($request->all());
         return $this->sendResponse(new ClientResource($client), 'Client Created Successfully.');
-   
     }
 
     /**
@@ -67,7 +80,11 @@ class ClientController extends Controller
         $clientExist = Client::where('id', $id)->exists();
         if ($clientExist == null) {
             return $this->sendError('Client is not exist.');
-        }
+        }    
+        $user=User::where('id',$request->user_id)->first();
+        if($user->role !== "client" ){
+                   return $this->sendError("this user is not client");
+               }
         $client = Client::findOrFail($id);
         $client->update($request->all());
         return $this->sendResponse(new ClientResource($client), 'Client Updated Successfully.');

@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\VoitureResource;
+use App\Http\Resources\EquipementResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LigneEquipementVoitureResource extends JsonResource
@@ -14,6 +16,12 @@ class LigneEquipementVoitureResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return 
+        [
+            "equipement_id"=>$this->equipement_id,
+            "voiture_id"=>$this->voiture_id,
+            // "equipement"=>EquipementResource::collection($this->equipements),
+            // "voiture"=>VoitureResource::collection($this->voitures),
+        ];
     }
 }
