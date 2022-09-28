@@ -25,6 +25,10 @@ A corriger dans endpoints:
 -Ajouter fonction retournant la liste des voitures en attente de validation 
 -Ajouter des fonctions pour Approuver ou rejeter une voiture avec motif
 
+->header('Access-Control-Allow-Origin', '*')
+->header('Access-Control-Allow-Methods', 'GET, POST, PUT,PATCH, DELETE, OPTIONS')
+->header('Access-Control-Allow-Headers','Content-Type','Authorization')
+
 
 
 www.afribaba.bi
