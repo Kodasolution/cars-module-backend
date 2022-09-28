@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
-Route::group(['prefix' => 'v1','middleware'=>'cors'], function () {
+Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::group(['middleware' => ['auth:sanctum', "super_admins:super_admin"]], function () {
             Route::apiResource("/voiture/marque", MarqueController::class);

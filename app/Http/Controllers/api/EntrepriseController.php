@@ -122,9 +122,7 @@ class EntrepriseController extends Controller
 
     public function DetailEntreprise()
     {
-        // return "jaaaaaa";
         $entreprise = Entreprise::all();
-        // return $entreprise;
         if (sizeof($entreprise) == 0) {
             return $this->sendError('Entreprese not found.');
         }
@@ -132,9 +130,7 @@ class EntrepriseController extends Controller
     }
     public function DetailOneEntreprise($id)
     {
-        $entrepriseExist = Entreprise::where('id', $id)->exists();
-        // return $entrepriseExist;
-        
+        $entrepriseExist = Entreprise::where('id', $id)->exists();        
         if ($entrepriseExist == null) {
             return $this->sendError('Entreprise is not exist.');
         }

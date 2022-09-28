@@ -18,10 +18,7 @@ class Admin
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()->role === "admin") {
-            return $next($request)
-            ->header('Access-Control-Allow-Origin', '*')
-            ->header('Access-Control-Allow-Methods', 'GET, POST, PUT,PATCH, DELETE, OPTIONS')
-            ->header('Access-Control-Allow-Headers','Content-Type','Authorization');
+            return $next($request);
         } else {
             return response()->json(
                 [
