@@ -10,6 +10,7 @@ use App\Models\Location;
 use App\Models\Entreprise;
 use App\Models\Equipement;
 use App\Models\TypeVoiture;
+use App\Models\LigneEquipementsVoiture;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -85,6 +86,7 @@ class Voiture extends Model
         return $this->belongsTo(Modele::class,'model_id');
     }
 
+
       /**
      * Get the marque that owns the Voiture
      *
@@ -93,5 +95,15 @@ class Voiture extends Model
     public function marque()
     {
         return $this->belongsTo(Marque::class,'marque_id');
+    }
+
+    /**
+     * Get all of the ligneVoitureEquipement for the Voiture
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ligneVoitureEquipements()
+    {
+        return $this->hasMany(LigneEquipementsVoiture::class, 'voiture_id', 'id');
     }
 }

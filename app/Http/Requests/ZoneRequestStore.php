@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LigneLocationVoitureResquestStore extends FormRequest
+class ZoneRequestStore extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,8 @@ class LigneLocationVoitureResquestStore extends FormRequest
     public function rules()
     {
         return [
-            // "date_location"=>"required|date|date_format:Y-m-d|after_or_equal:today",
-
-            "date_debut"=>"required|date|date_format:Y-m-d|after_or_equal:today",
-            "nombre_jrs"=>"required",
-            "date_fin"=>"required|date|date_format:Y-m-d|after_or_equal:date_debut",
-            "voiture_id"=>"required",
-            "location_id"=>"required"
+            "nom_zone"=>"required|unique:zones|max:255",
+            "commune_id"=>"required"
         ];
     }
 }

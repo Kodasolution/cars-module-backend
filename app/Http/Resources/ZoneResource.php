@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\ProvinceResource;
+use App\Http\Resources\QuartierResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CommuneResource extends JsonResource
+class ZoneResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,9 @@ class CommuneResource extends JsonResource
     {
         return [
             "id"=>$this->id,
-            "nom_commune"=>$this->nom_commune,
-            "province_id"=>$this->province_id,
-            "zone"=> ZoneResource::collection($this->zones)
+            "nom_zone"=>$this->nom_zone,
+            "commune_id"=>$this->commune_id,
+            "quartier"=>QuartierResource::collection($this->quartiers)
         ];
     }
 }

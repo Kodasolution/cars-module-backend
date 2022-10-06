@@ -34,27 +34,27 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AdminRequestStore $request)
-    {
-        $userExist = User::find($request->user_id);
-        $entrepriseExist = Entreprise::find($request->entreprise_id);
-        if (is_null($userExist)) {
-            return $this->sendError('user_id not found.');
-        }
-        if (is_null($entrepriseExist)) {
-            return $this->sendError('entreprise_id not found.');
-        }
-        $user = User::where('id', $request->user_id)->first();
-        $adminExist = Admin::where('user_id', $user->id)->first();
-        if ($adminExist) {
-            return $this->sendError('admin is already exist.');
-        }
-        if ($user->role !== "admin") {
-            return $this->sendError("this user is not admin");
-        }
-        $admin = Admin::create($request->all());
-        return $this->sendResponse(new AdminResource($admin), 'admin Created Successfully.');
-    }
+    // public function store(AdminRequestStore $request)
+    // {
+    //     $userExist = User::find($request->user_id);
+    //     $entrepriseExist = Entreprise::find($request->entreprise_id);
+    //     if (is_null($userExist)) {
+    //         return $this->sendError('user_id not found.');
+    //     }
+    //     if (is_null($entrepriseExist)) {
+    //         return $this->sendError('entreprise_id not found.');
+    //     }
+    //     $user = User::where('id', $request->user_id)->first();
+    //     $adminExist = Admin::where('user_id', $user->id)->first();
+    //     if ($adminExist) {
+    //         return $this->sendError('admin is already exist.');
+    //     }
+    //     if ($user->role !== "admin") {
+    //         return $this->sendError("this user is not admin");
+    //     }
+    //     $admin = Admin::create($request->all());
+    //     return $this->sendResponse(new AdminResource($admin), 'admin Created Successfully.');
+    // }
 
     /**
      * Display the specified resource.
@@ -78,25 +78,25 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminRequestUpdate $request, $id)
-    {
-        $adminExist = Admin::where('id', $id)->exists();
-        $entrepriseExist = Entreprise::find($request->entreprise_id);
-        if ($adminExist == null) {
-            return $this->sendError('admin is not exist.');
-        }
+    // public function update(AdminRequestUpdate $request, $id)
+    // {
+    //     $adminExist = Admin::where('id', $id)->exists();
+    //     $entrepriseExist = Entreprise::find($request->entreprise_id);
+    //     if ($adminExist == null) {
+    //         return $this->sendError('admin is not exist.');
+    //     }
 
-        if (is_null($entrepriseExist)) {
-            return $this->sendError('entreprise_id not found.');
-        }
-        $user = User::where('id', $request->user_id)->first();
-        if ($user->role !== "admin") {
-            return $this->sendError("this user is not client");
-        }
-        $admin = Admin::findOrFail($id);
-        $admin->update($request->all());
-        return $this->sendResponse(new AdminResource($admin), 'admin Updated Successfully.');
-    }
+    //     if (is_null($entrepriseExist)) {
+    //         return $this->sendError('entreprise_id not found.');
+    //     }
+    //     $user = User::where('id', $request->user_id)->first();
+    //     if ($user->role !== "admin") {
+    //         return $this->sendError("this user is not client");
+    //     }
+    //     $admin = Admin::findOrFail($id);
+    //     $admin->update($request->all());
+    //     return $this->sendResponse(new AdminResource($admin), 'admin Updated Successfully.');
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -104,14 +104,14 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $adminExist = Admin::where('id', $id)->exists();
-        if ($adminExist == null) {
-            return $this->sendError('admin is not exist.');
-        }
-        $admin = Admin::findOrFail($id);
-        $admin->delete();
-        return $this->sendResponse([], 'admin Deleted Successfully.');
-    }
+    // public function destroy($id)
+    // {
+    //     $adminExist = Admin::where('id', $id)->exists();
+    //     if ($adminExist == null) {
+    //         return $this->sendError('admin is not exist.');
+    //     }
+    //     $admin = Admin::findOrFail($id);
+    //     $admin->delete();
+    //     return $this->sendResponse([], 'admin Deleted Successfully.');
+    // }
 }

@@ -34,23 +34,23 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClientRequestStore $request)
-    {
-        $userExist = User::find( $request->user_id);
-        if(is_null($userExist)){
-            return $this->sendError('user_id not found.');
-        }
-        $user=User::where('id',$request->user_id)->first();
-        $clientExist= Client::where('user_id',$user->id)->first();
-        if($clientExist){
-            return $this->sendError('client is already exist.');
-        }
-        if($user->role !== "client" ){
-            return $this->sendError("this user is not client");
-        }
-        $client = Client::create($request->all());
-        return $this->sendResponse(new ClientResource($client), 'Client Created Successfully.');
-    }
+    // public function store(ClientRequestStore $request)
+    // {
+    //     $userExist = User::find( $request->user_id);
+    //     if(is_null($userExist)){
+    //         return $this->sendError('user_id not found.');
+    //     }
+    //     $user=User::where('id',$request->user_id)->first();
+    //     $clientExist= Client::where('user_id',$user->id)->first();
+    //     if($clientExist){
+    //         return $this->sendError('client is already exist.');
+    //     }
+    //     if($user->role !== "client" ){
+    //         return $this->sendError("this user is not client");
+    //     }
+    //     $client = Client::create($request->all());
+    //     return $this->sendResponse(new ClientResource($client), 'Client Created Successfully.');
+    // }
 
     /**
      * Display the specified resource.
@@ -75,21 +75,21 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ClientRequestUpdate $request, $id)
-    {
-        $clientExist = Client::where('id', $id)->exists();
-        if ($clientExist == null) {
-            return $this->sendError('Client is not exist.');
-        }    
-        $user=User::where('id',$request->user_id)->first();
-        if($user->role !== "client" ){
-                   return $this->sendError("this user is not client");
-               }
-        $client = Client::findOrFail($id);
-        $client->update($request->all());
-        return $this->sendResponse(new ClientResource($client), 'Client Updated Successfully.');
+    // public function update(ClientRequestUpdate $request, $id)
+    // {
+    //     $clientExist = Client::where('id', $id)->exists();
+    //     if ($clientExist == null) {
+    //         return $this->sendError('Client is not exist.');
+    //     }    
+    //     $user=User::where('id',$request->user_id)->first();
+    //     if($user->role !== "client" ){
+    //                return $this->sendError("this user is not client");
+    //            }
+    //     $client = Client::findOrFail($id);
+    //     $client->update($request->all());
+    //     return $this->sendResponse(new ClientResource($client), 'Client Updated Successfully.');
    
-    }
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -97,14 +97,14 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $clientExist = Client::where('id', $id)->exists();
-        if ($clientExist == null) {
-            return $this->sendError('Client is not exist.');
-        }
-        $client = Client::findOrFail($id);
-        $client->delete();
-        return $this->sendResponse([], 'Client Deleted Successfully.');
-    }
+    // public function destroy($id)
+    // {
+    //     $clientExist = Client::where('id', $id)->exists();
+    //     if ($clientExist == null) {
+    //         return $this->sendError('Client is not exist.');
+    //     }
+    //     $client = Client::findOrFail($id);
+    //     $client->delete();
+    //     return $this->sendResponse([], 'Client Deleted Successfully.');
+    // }
 }

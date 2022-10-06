@@ -44,6 +44,9 @@ class LigneLocationVoitureController extends Controller
             return $this->sendError('Nombre de jrs pas egal a la diff entre debut et fin .');
         }
         $voitureExist = Voiture::find( $request->voiture_id);
+        // $voiture=Voiture::where("id",$request->voiture_id)->first();
+        // return ($voiture->entreprise);
+        // // if($voiture->entreprise)
         if(is_null($voitureExist)){
                return $this->sendError('voiture_id not found.');
            }
