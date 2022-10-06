@@ -20,6 +20,7 @@ use App\Http\Controllers\api\TypeVoitureController;
 use App\Http\Controllers\api\VoitureController;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes

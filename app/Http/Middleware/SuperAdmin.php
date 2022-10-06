@@ -20,7 +20,7 @@ class SuperAdmin
         $txt_arr = explode("|", $txt);
         foreach ($txt_arr as $r) {
             if (strtolower(Auth::user()->role) === strtolower($r)) {
-                return $next($request);
+                return $next($request );
             }
         }
         return response()->json(['error' => 'Unauthenticated.'], 403);
