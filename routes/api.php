@@ -16,8 +16,11 @@ use App\Http\Controllers\api\ModeleController;
 use App\Http\Controllers\api\ParametreController;
 use App\Http\Controllers\api\PhotoController;
 use App\Http\Controllers\api\ProvinceController;
+use App\Http\Controllers\api\QuartierController;
 use App\Http\Controllers\api\TypeVoitureController;
+use App\Http\Controllers\api\UtilisateurController;
 use App\Http\Controllers\api\VoitureController;
+use App\Http\Controllers\api\ZoneController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,13 +43,17 @@ Route::group(['prefix' => 'v1'], function () {
             Route::apiResource("/voiture/equipement", EquipementController::class);
             Route::apiResource("/province", ProvinceController::class);
             Route::apiResource("/commune", CommuneController::class);
+            Route::apiResource("/zone",ZoneController::class);
+            Route::apiResource("/quartier",QuartierController::class);
             Route::apiResource("/adresse", AdresseController::class);
             Route::apiResource("/entreprise", EntrepriseController::class);
+            Route::apiResource("/user",UtilisateurController::class);
             Route::patch("/entreprise/change-status/{id}",[EntrepriseController::class,'changeStatusEntreprise'])->name("entreprise.change.status");
             Route::get("/entreprise/by-status/{status}",[EntrepriseController::class,'EntrepriseByStatus'])->name("entreprise.by.status");
             Route::get("/entreprise-detail",[EntrepriseController::class,'DetailEntreprise'])->name('entreprise.detatail.all');
             Route::get("/entreprise-detail/{id}",[EntrepriseController::class,'DetailOneEntreprise'])->name('entreprise.detatail.one');
-            Route::apiResource("/manager", AdminController::class);
+            Route::get("/manager",[AdminController::class,'index']);
+            Route::get("/manager/{id}",[AdminController::class,'show']);
         });
         Route::group(['middleware' => ['auth:sanctum', 'super_admins:super_admin|admin']], function () {
             Route::apiResource("/voiture", VoitureController::class);
@@ -56,7 +63,8 @@ Route::group(['prefix' => 'v1'], function () {
             Route::apiResource("/voiture/photo", PhotoController::class);
             Route::apiResource("/voiture/ligne/equipement", LigneEquipementVoitureController::class);
             Route::apiResource("/voiture/ligne-location-voiture", LigneLocationVoitureController::class);
-            Route::apiResource("/client", ClientController::class);
+            Route::get("/client",[ClientController::class, 'index']);
+            Route::get("/client/{id}",[ClientController::class, 'show']);
             Route::apiResource("/location", LocationController::class);
             Route::apiResource("/location-entreprise", LocationEntrepriseController::class);
         });

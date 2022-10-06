@@ -7,6 +7,7 @@ use App\Http\Requests\CommuneRequestStore;
 use App\Http\Resources\CommuneByProvinceResource;
 use App\Http\Resources\CommuneResource;
 use App\Models\Commune;
+use App\Models\Province;
 use Illuminate\Http\Request;
 
 class CommuneController extends Controller
@@ -22,7 +23,7 @@ class CommuneController extends Controller
         if (sizeof($commune) == 0) {
             return $this->sendError('Province not found.');
         }
-        return $this->sendResponse(CommuneByProvinceResource::collection($commune), 'fetch is called Successfully.');
+        return $this->sendResponse(CommuneResource::collection($commune), 'fetch is called Successfully.');
     }
 
     /**
@@ -33,8 +34,12 @@ class CommuneController extends Controller
      */
     public function store(CommuneRequestStore $request)
     {
+        $provinceExist = Province::find($request->province_id);
+        if (is_null($provinceExist)) {
+            return $this->sendError('province_id not found.');
+        }
         $commune = Commune::create($request->all());
-        return $this->sendResponse(new CommuneByProvinceResource($commune), 'Commune Created Successfully.');
+        return $this->sendResponse(new CommuneResource($commune), 'Commune Created Successfully.');
     }
 
     /**
@@ -49,7 +54,7 @@ class CommuneController extends Controller
         if (is_null($commune)) {
             return $this->sendError('Commune not found.');
         }
-        return $this->sendResponse(new CommuneByProvinceResource($commune), 'Commune is fetching Successfully .');
+        return $this->sendResponse(new CommuneResource($commune), 'Commune is fetching Successfully .');
     }
 
     /**
@@ -65,9 +70,13 @@ class CommuneController extends Controller
         if ($communeExist == null) {
             return $this->sendError('Commune is not exist.');
         }
+        $provinceExist = Province::find($request->province_id);
+        if (is_null($provinceExist)) {
+            return $this->sendError('province_id not found.');
+        }
         $commune = Commune::findOrFail($id);
         $commune->update($request->all());
-        return $this->sendResponse(new CommuneByProvinceResource($commune), 'Commune Updated Successfully.');
+        return $this->sendResponse(new CommuneResource($commune), 'Commune Updated Successfully.');
     }
 
     /**
