@@ -33,8 +33,11 @@ class MarqueController extends Controller
      */
     public function store(MarqueStoreRequest $request)
     {
-        // return $request->all();
-        $marque = Marque::create($request->all());
+        $file = $request->logo_marque->store("MarqueVoitureImages/" . $request->marque, "public");
+        $marque = Marque::create([
+            'marque' => $request->marque,
+            "logo_marque"=> $file
+        ]);
         return $this->sendResponse(new MarqueResource($marque), 'Marque Created Successfully.');
     }
 
@@ -67,7 +70,13 @@ class MarqueController extends Controller
             return $this->sendError('Marque is not exist.');
         }
         $marque = Marque::findOrFail($id);
-        $marque->update($request->all());
+        $file = $request->logo_marque->store("MarqueVoitureImages/" . $request->marque, "public");
+        $marque->update(
+            [
+                'marque' => $request->marque,
+                "logo_marque"=> $file
+            ]
+        );
         return $this->sendResponse(new MarqueResource($marque), 'Marque Updated Successfully.');
     }
 

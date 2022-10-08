@@ -27,7 +27,7 @@ class TypeRequestUpdate extends FormRequest
         return 
         [
             "type"=>'required', Rule::unique('type_voitures')->ignore($this->type),
-            "photo_type_voiture"=>'required'
+            "photo_type_voiture"=>'required|file'
         ];
     }
 }

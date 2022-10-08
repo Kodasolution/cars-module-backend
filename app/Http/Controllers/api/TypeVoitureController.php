@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Models\TypeVoiture;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TypeRequestStore;
 use App\Http\Requests\TypeRequestUpdate;
 use App\Http\Resources\TypeVoitureResource;
+use App\Models\TypeVoiture;
+use Illuminate\Http\Request;
 
 class TypeVoitureController extends Controller
 {
@@ -31,10 +30,19 @@ class TypeVoitureController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TypeRequestStore $request)
+    public function store(Request $request)
     {
-        
-        $type = TypeVoiture::create($request->all());
+        $data = $request->validate(
+            [
+                "type" => "required|unique:type_voitures,type",
+                "photo_type_voiture" => 'required|file',
+            ]
+        );
+        $file = $request->photo_type_voiture->store("TypeVoitureImages/" . $request->type, "public");
+        $type = TypeVoiture::create([
+            'type' => $request->type,
+            'photo_type_voiture' => $file,
+        ]);
         return $this->sendResponse(new TypeVoitureResource($type), 'Type Created Successfully.');
     }
 
@@ -67,7 +75,11 @@ class TypeVoitureController extends Controller
             return $this->sendError('Type is not exist.');
         }
         $type = TypeVoiture::findOrFail($id);
-        $type->update($request->all());
+        $file = $request->photo_type_voiture->store("TypeVoitureImages/" . $request->type, "public");
+        $type->update([
+            'type' => $request->type,
+            'photo_type_voiture' => $file,
+        ]);
         return $this->sendResponse(new TypeVoitureResource($type), 'Type Updated Successfully.');
     }
 
