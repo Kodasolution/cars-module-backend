@@ -21,7 +21,11 @@ class TypeVoitureController extends Controller
         if (sizeof($type) == 0) {
             return $this->sendError('Type not found.');
         }
-        return $this->sendResponse(TypeVoitureResource::collection($type), 'fetch is called Successfully.');
+        return $this->sendResponse([
+            "type"=> $type->type,
+            "photo_type_voiture"=>url('storage/'.$type->photo_type_voiture)
+        ],'Type is fetching Successfully');
+        // return $this->sendResponse(TypeVoitureResource::collection($type), 'fetch is called Successfully.');
     }
 
     /**
@@ -38,12 +42,16 @@ class TypeVoitureController extends Controller
                 "photo_type_voiture" => 'required|file',
             ]
         );
-        $file = $request->photo_type_voiture->store("TypeVoitureImages/" . $request->type, "public");
+        $file = $request->photo_type_voiture->store("TypeVoitureImages/" , "public");
         $type = TypeVoiture::create([
             'type' => $request->type,
             'photo_type_voiture' => $file,
         ]);
-        return $this->sendResponse(new TypeVoitureResource($type), 'Type Created Successfully.');
+        return $this->sendResponse([
+            "type"=> $type->type,
+            "photo_type_voiture"=>url('storage/'.$type->photo_type_voiture)
+        ],'Marque Created Successfully.');
+        // return $this->sendResponse(new TypeVoitureResource($type), 'Type Created Successfully.');
     }
 
     /**
@@ -58,7 +66,11 @@ class TypeVoitureController extends Controller
         if (is_null($type)) {
             return $this->sendError('Type not found.');
         }
-        return $this->sendResponse(new TypeVoitureResource($type), 'Type is fetching Successfully .');
+        return $this->sendResponse([
+            "type"=> $type->type,
+            "photo_type_voiture"=>url('storage/'.$type->photo_type_voiture)
+        ],'Type is fetching Successfully');
+        // return $this->sendResponse(new TypeVoitureResource($type), 'Type is fetching Successfully .');
     }
 
     /**
@@ -80,7 +92,11 @@ class TypeVoitureController extends Controller
             'type' => $request->type,
             'photo_type_voiture' => $file,
         ]);
-        return $this->sendResponse(new TypeVoitureResource($type), 'Type Updated Successfully.');
+        return $this->sendResponse([
+            "type"=> $type->type,
+            "photo_type_voiture"=>url('storage/'.$type->photo_type_voiture)
+        ],'Type Updated Successfully');
+        // return $this->sendResponse(new TypeVoitureResource($type), 'Type Updated Successfully.');
     }
 
     /**

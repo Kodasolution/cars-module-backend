@@ -23,7 +23,8 @@ class EntrepriseResource extends JsonResource
             "nif_entreprise"=>$this->nif_entreprise,
             "type_entreprise"=>$this->type_entreprise,
             "actif"=>$this->actif,
-            "adresse_id"=>$this->adresse_id
+            "quartier_id"=>$this->quartier_id,
+            "rue"=>$this->rue
         ];
     }
 }

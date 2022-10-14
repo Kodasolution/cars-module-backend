@@ -16,7 +16,8 @@ class ModeleResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'modele'=>$this->modele
+            'modele'=>$this->modele,
+            "marque_id"=>$this->marque_id
         ];
     }
 }

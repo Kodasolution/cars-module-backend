@@ -40,7 +40,6 @@ class VoitureUpdateRequest extends FormRequest
             "type_voiture_id" => "required",
             "model_id" => "required",
             "marque_id"=>"required",
-            "adresse_id" => "required",
             "entreprise_id" => "required",
             "valide" => 'boolean',
             "en_location" => 'boolean',

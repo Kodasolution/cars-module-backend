@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ModeleRequestStore;
 use App\Http\Requests\ModeleRequestUpdate;
 use App\Http\Resources\ModeleResource;
+use App\Models\Marque;
 use Illuminate\Database\Eloquent\Model;
 
 class ModeleController extends Controller
@@ -34,6 +35,10 @@ class ModeleController extends Controller
      */
     public function store(ModeleRequestStore $request)
     {
+        $MarqueExist = Marque::find($request->marque_id);
+        if (is_null($MarqueExist)) {
+            return $this->sendError('marque_id not found.');
+        }
         $modele = Modele::create($request->all());
         return $this->sendResponse(new ModeleResource($modele), 'Modele Created Successfully.');
     }
@@ -65,6 +70,10 @@ class ModeleController extends Controller
         $modeleExist=Modele::where('id',$id)->exists();
         if ($modeleExist == null) {
             return $this->sendError('Model is not exist.');
+        }
+        $MarqueExist = Marque::find($request->marque_id);
+        if (is_null($MarqueExist)) {
+            return $this->sendError('marque_id not found.');
         }
         $modele = Modele::findOrFail($id);
         $modele->update($request->all());

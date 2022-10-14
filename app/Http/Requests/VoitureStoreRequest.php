@@ -38,7 +38,6 @@ class VoitureStoreRequest extends FormRequest
             "prix" => "required",
             "type_voiture_id" => "required",
             "model_id" => "required",
-            "adresse_id" => "required",
             "entreprise_id" => "required",
             "marque_id"=>"required",
             "valide" => 'boolean',
@@ -48,6 +47,7 @@ class VoitureStoreRequest extends FormRequest
             "slug_nom_vehicule" => "",
             "consommation" => "",
             "capacite_charge_max" => "",
+            
         ];
     }
 }

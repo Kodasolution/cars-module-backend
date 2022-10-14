@@ -9,6 +9,7 @@ use App\Http\Resources\EntrepriseDetailResource;
 use App\Http\Resources\EntrepriseResource;
 use App\Models\Adresse;
 use App\Models\Entreprise;
+use App\Models\Quartier;
 use Hamcrest\Type\IsBoolean;
 use Illuminate\Http\Request;
 
@@ -36,9 +37,24 @@ class EntrepriseController extends Controller
      */
     public function store(EntrepriseRequestStore $request)
     {
-        $adressExist = Adresse::find( $request->adresse_id);
+        $adressExist = Quartier::find( $request->quartier_id);
         if(is_null($adressExist)){
-            return $this->sendError('adresse_id not found.');
+            return $this->sendError('quartier_id not found.');
+        }
+        if($request->logo_entreprise !== null){
+            $file = $request->logo_entreprise->store("logo" , "public");
+            // return $file;
+            $entreprise = Entreprise::create([
+                "nom_entreprise"=>$request->nom_entreprise,
+                "email_entreprise"=>$request->email_entreprise,
+                "telephone_entreprise"=>$request->telephone_entreprise,
+                "logo_entreprise"=>$file,
+                "quartier_id"=>$request->quartier_id,
+                "nif_entreprise"=>$request->nif_entreprise,
+                "type_entreprise"=>$request->type_entreprise,
+                "actif"=>$request->actif,
+                "rue"=>$request->rue
+            ]);
         }
         $entreprise = Entreprise::create($request->all());
         return $this->sendResponse(new EntrepriseResource($entreprise), 'Entreprise Created Successfully.');
@@ -72,11 +88,26 @@ class EntrepriseController extends Controller
         if ($entrepriseExist == null) {
             return $this->sendError('Entreprise is not exist.');
         }
-        $adressExist = Adresse::find( $request->adresse_id);
+        $adressExist = Quartier::find( $request->quartier_id);
         if(is_null($adressExist)){
-            return $this->sendError('adresse_id not found.');
+            return $this->sendError('quartier_id not found.');
         }
         $entreprise = Entreprise::findOrFail($id);
+        if($request->logo_entreprise !== null){
+            $file = $request->logo_entreprise->store("logo" , "public");
+            // return $file;
+            $entreprise->update([
+                "nom_entreprise"=>$request->nom_entreprise,
+                "email_entreprise"=>$request->email_entreprise,
+                "telephone_entreprise"=>$request->telephone_entreprise,
+                "logo_entreprise"=>$file,
+                "quartier_id"=>$request->quartier_id,
+                "nif_entreprise"=>$request->nif_entreprise,
+                "type_entreprise"=>$request->type_entreprise,
+                "actif"=>$request->actif,
+                "rue"=>$request->rue
+            ]);
+        }
         $entreprise->update($request->all());
         return $this->sendResponse(new EntrepriseResource($entreprise), 'Entreprise Updated Successfully.');
     }

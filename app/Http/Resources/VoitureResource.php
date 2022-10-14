@@ -27,7 +27,6 @@ class VoitureResource extends JsonResource
             "created_at"=>$this->created_at,
             "en_location"=>$this->en_location,
             "entreprise_id"=>$this->entreprise_id,
-            "adresse_id"=>$this->adresse_id,
             "kilometrage"=>$this->kilometrage,
             "model_id"=>$this->model_id,
             "marque_id"=>$this->marque_id,

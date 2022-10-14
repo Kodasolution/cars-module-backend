@@ -24,7 +24,8 @@ class ModeleRequestStore extends FormRequest
     public function rules()
     {
         return [
-            "modele"=>"required|unique:modele,modele"
+            "modele"=>"required|unique:modele,modele",
+            "marque_id"=>"required"
         ];
     }
 }

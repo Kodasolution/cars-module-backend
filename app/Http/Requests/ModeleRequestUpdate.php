@@ -25,8 +25,8 @@ class ModeleRequestUpdate extends FormRequest
     public function rules()
     {
         return [
-            "modele"=>'required', Rule::unique('modele')->ignore($this->modele)
-            
+            "modele"=>'required', Rule::unique('modele')->ignore($this->modele),
+            "marque_id"=>"required"
         ];
     }
 }

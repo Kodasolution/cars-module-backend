@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use App\Models\Admin;
+use App\Http\Resources\AdminResource;
+use App\Http\Resources\QuartierResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EntrepriseDetailResource extends JsonResource
@@ -25,7 +27,8 @@ class EntrepriseDetailResource extends JsonResource
             "nif_entreprise"=>$this->nif_entreprise,
             "type_entreprise"=>$this->type_entreprise,
             "actif"=>$this->actif,
-            "adresse"=> new AdresseResource($this->adresse),
+            "rue"=>$this->rue,
+            "adresse"=> new  QuartierResource($this->quartier),
             // "admin"=>AdminResource::collection(Admin::where("principale",1)->with("user")->get())
             "admin"=>AdminResource::collection($this->admins)
          ];

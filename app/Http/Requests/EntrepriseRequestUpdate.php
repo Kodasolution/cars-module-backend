@@ -29,10 +29,11 @@ class EntrepriseRequestUpdate extends FormRequest
             "email_entreprise"=>"required|email",
             "telephone_entreprise"=>"required",
             "logo_entreprise"=>"",
-            "adresse_id"=>"required",
+            "quartier_id"=>"required",
             "nif_entreprise"=>"required",
             "type_entreprise"=>"required",
             "actif"=>"boolean",
+            "rue"=>""
         ];
     }
 }

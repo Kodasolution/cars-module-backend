@@ -40,12 +40,10 @@ class CreateVoitureTable extends Migration
             $table->boolean("active")->default(0);
             $table->string("condition_de_location")->nullable();
             $table->unsignedBigInteger('model_id')->index();
-            $table->unsignedBigInteger('adresse_id')->index();
-            $table->foreign('model_id')->references('id')->on('modele')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('adresse_id')->references('id')->on('adresses')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('marque_id')->references('id')->on('marque')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('type_voiture_id')->references('id')->on('type_voitures')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('entreprise_id')->references('id')->on('entreprises')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('model_id')->references('id')->on('modele');
+            $table->foreign('marque_id')->references('id')->on('marque');
+            $table->foreign('type_voiture_id')->references('id')->on('type_voitures');
+            $table->foreign('entreprise_id')->references('id')->on('entreprises');
             $table->timestamps();
         });
     }

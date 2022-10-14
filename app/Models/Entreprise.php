@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Admin;
 use App\Models\Voiture;
+use App\Models\Quartier;
 use App\Models\Utilisateur;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,9 +38,9 @@ class Entreprise extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function adresse()
+    public function quartier()
     {
-        return $this->belongsTo(Adresse::class);
+        return $this->belongsTo(Quartier::class);
     }
     /**
      * Get all of the voitures for the Entreprise

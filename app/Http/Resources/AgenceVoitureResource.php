@@ -45,7 +45,7 @@ class AgenceVoitureResource extends JsonResource
             "valide"=>$this->valide,
             "volant"=>$this->volant,
             "version"=>$this->version,
-            "adresse_id"=>$this->adresse_id,
+            "quartier_id"=>$this->quartier_id,
             "entreprise_id"=>$this->entreprise_id,
             "photo"=>PhotoResource::collection($this->photos),
             "type_voiture"=>new TypeVoitureResource($this->type),

@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\VoitureStoreRequest;
-use App\Http\Requests\VoitureUpdateRequest;
-use App\Http\Resources\VoitureByAgenceResource;
-use App\Http\Resources\VoitureResource;
-use App\Http\Resources\VoitureResourceDetail;
-use App\Models\Adresse;
-use App\Models\Entreprise;
-use App\Models\Equipement;
-use App\Models\LigneEquipementsVoiture;
+use App\Models\Marque;
 use App\Models\Modele;
 use App\Models\Photos;
-use App\Models\TypeVoiture;
+use App\Models\Adresse;
 use App\Models\Voiture;
+use App\Models\Entreprise;
+use App\Models\Equipement;
+use App\Models\TypeVoiture;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\VoitureResource;
+use App\Models\LigneEquipementsVoiture;
+use App\Http\Requests\VoitureStoreRequest;
+use App\Http\Requests\VoitureUpdateRequest;
+use App\Http\Resources\VoitureResourceDetail;
+use App\Http\Resources\VoitureByAgenceResource;
 
 class VoitureController extends Controller
 {
@@ -48,16 +49,16 @@ class VoitureController extends Controller
         try {
             $ModelExist = Modele::find($request->model_id);
             $entrepriseExist = Entreprise::find($request->entreprise_id);
-            $adresseExist = Adresse::find($request->adresse_id);
             $typeExist = TypeVoiture::find($request->type_voiture_id);
+            $MarqueExist = Marque::find($request->marque_id);
+            if (is_null($MarqueExist)) {
+                return $this->sendError('marque_id not found.');
+            }
             if (is_null($ModelExist)) {
                 return $this->sendError('model_id not found.');
             }
             if (is_null($entrepriseExist)) {
                 return $this->sendError('entreprise_id not found.');
-            }
-            if (is_null($adresseExist)) {
-                return $this->sendError('adresse_id not found.');
             }
             if (is_null($typeExist)) {
                 return $this->sendError('type_voiture_id not found.');
@@ -77,7 +78,6 @@ class VoitureController extends Controller
                 "prix" => $request->prix,
                 "type_voiture_id" => $request->type_voiture_id,
                 "model_id" => $request->model_id,
-                "adresse_id" => $request->adresse_id,
                 "entreprise_id" => $request->entreprise_id,
                 "marque_id" => $request->marque_id,
                 // "valide" => $request->valide,
@@ -111,9 +111,10 @@ class VoitureController extends Controller
             } else {
                 return $this->sendError('we have selected same equipements change it');
             }
+// return $request->photo;
             if (!is_null($request->photo)) {
                 foreach ($request->photo as $item) {
-                    $file = $item->store("voitureImages/" . $voiture_id, "public");
+                    $file = $item->store("voitureImages", "public");
                     Photos::create([
                         "voiture_id" => $voiture_id,
                         "url_photo" => $file,
@@ -161,16 +162,16 @@ class VoitureController extends Controller
             $voitureExist = Voiture::where('id', $id)->exists();
             $ModelExist = Modele::find($request->model_id);
             $entrepriseExist = Entreprise::find($request->entreprise_id);
-            $adresseExist = Adresse::find($request->adresse_id);
             $typeExist = TypeVoiture::find($request->type_voiture_id);
+            $MarqueExist = Marque::find($request->marque_id);
+            if (is_null($MarqueExist)) {
+                return $this->sendError('marque_id not found.');
+            }
             if (is_null($ModelExist)) {
                 return $this->sendError('model_id not found.');
             }
             if (is_null($entrepriseExist)) {
                 return $this->sendError('entreprise_id not found.');
-            }
-            if (is_null($adresseExist)) {
-                return $this->sendError('adresse_id not found.');
             }
             if (is_null($typeExist)) {
                 return $this->sendError('type_voiture_id not found.');
@@ -194,7 +195,6 @@ class VoitureController extends Controller
                 "prix" => $request->prix,
                 "type_voiture_id" => $request->type_voiture_id,
                 "model_id" => $request->model_id,
-                "adresse_id" => $request->adresse_id,
                 "entreprise_id" => $request->entreprise_id,
                 "marque_id" => $request->marque_id,
                 // "valide" => $request->valide,

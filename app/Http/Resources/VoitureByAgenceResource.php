@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Http\Resources\AdresseResource;
+use App\Http\Resources\QuartierResource;
 use App\Http\Resources\AgenceVoitureResource;
 use App\Http\Resources\VoitureResourceDetail;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,7 +28,7 @@ class VoitureByAgenceResource extends JsonResource
             "nif_entreprise" => $this->nif_entreprise,
             "type_entreprise" => $this->type_entreprise,
             "actif" => $this->actif,
-            "adresse" => new AdresseResource($this->adresse),
+            "adresse" => new QuartierResource($this->quartier),
             "voiture" => AgenceVoitureResource::collection($this->voitures),
         ];
     }

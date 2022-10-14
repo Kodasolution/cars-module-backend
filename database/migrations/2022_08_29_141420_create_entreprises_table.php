@@ -15,6 +15,7 @@ class CreateEntreprisesTable extends Migration
     {
         Schema::create('entreprises', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('quartier_id')->index();
             $table->string("nom_entreprise");
             $table->string("email_entreprise");
             $table->integer("telephone_entreprise");
@@ -22,8 +23,8 @@ class CreateEntreprisesTable extends Migration
             $table->string("nif_entreprise")->nullable();
             $table->string("type_entreprise");
             $table->boolean("actif")->default(0);
-            $table->unsignedBigInteger('adresse_id')->index();
-            $table->foreign('adresse_id')->references('id')->on('adresses')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('rue')->nullable();
+            $table->foreign('quartier_id')->references('id')->on('quartiers');
             $table->timestamps();
         });
     }

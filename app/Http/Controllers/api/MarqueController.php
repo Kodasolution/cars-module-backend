@@ -22,7 +22,11 @@ class MarqueController extends Controller
         if (sizeof($marque) == 0) {
             return $this->sendError('Marque not found.');
         }
-        return $this->sendResponse(MarqueResource::collection($marque), 'fetch is called Successfully.');
+        return $this->sendResponse([
+            "marque"=> $marque->marque,
+            "logo_marque"=>url('storage/'.$marque->logo_marque)
+        ],'Marque is fetching Successfully.');
+        // return $this->sendResponse(MarqueResource::collection($marque), 'fetch is called Successfully.');
     }
 
     /**
@@ -33,12 +37,23 @@ class MarqueController extends Controller
      */
     public function store(MarqueStoreRequest $request)
     {
-        $file = $request->logo_marque->store("MarqueVoitureImages/" . $request->marque, "public");
-        $marque = Marque::create([
+        // if($request->file('logo_marque')){
+        //     $file= $request->file('logo_marque');
+        //     $filename= date('YmdHi').$file->getClientOriginalName();
+        //     $file-> move('resources/app', $filename);
+        //     $photo= $filename;
+        // }
+        // $photo->save();
+        $file = $request->logo_marque->store("MarqueVoitureImages" , "public");
+        $data = Marque::create([
             'marque' => $request->marque,
             "logo_marque"=> $file
         ]);
-        return $this->sendResponse(new MarqueResource($marque), 'Marque Created Successfully.');
+        // return $this->sendResponse(new MarqueResource($data), 'Marque is fetching Successfully .');
+        return $this->sendResponse([
+            "marque"=> $data->marque,
+            "logo_marque"=>url('storage/'.$data->logo_marque)
+        ],'Marque Created Successfully.');
     }
 
     /**
@@ -53,7 +68,11 @@ class MarqueController extends Controller
         if (is_null($marque)) {
             return $this->sendError('Marque not found.');
         }
-        return $this->sendResponse(new MarqueResource($marque), 'Marque is fetching Successfully .');
+        return $this->sendResponse([
+            "marque"=> $marque->marque,
+            "logo_marque"=>url('storage/'.$marque->logo_marque)
+        ],'Marque is fetching Successfully.');
+        // return $this->sendResponse(new MarqueResource($marque), 'Marque is fetching Successfully .');
     }
 
     /**
@@ -77,7 +96,11 @@ class MarqueController extends Controller
                 "logo_marque"=> $file
             ]
         );
-        return $this->sendResponse(new MarqueResource($marque), 'Marque Updated Successfully.');
+        return $this->sendResponse([
+            "marque"=> $marque->marque,
+            "logo_marque"=>url('storage/'.$marque->logo_marque)
+        ],'Marque Updated Successfully.');
+        // return $this->sendResponse(new MarqueResource($marque), 'Marque Updated Successfully.');
     }
 
     /**

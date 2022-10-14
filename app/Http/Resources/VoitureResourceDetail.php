@@ -48,7 +48,6 @@ class VoitureResourceDetail extends JsonResource
             "version"=>$this->version,
             "photo"=>PhotoResource::collection($this->photos),
             "entreprise"=> new EntrepriseResource($this->entreprise),
-            "adresse"=> new AdresseResource($this->adresse),
             "type_voiture"=>new TypeVoitureResource($this->type),
             "modele"=>new ModeleResource($this->modele),
             "marque_id"=>new MarqueResource($this->marque),
