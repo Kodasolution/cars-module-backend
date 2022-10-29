@@ -111,7 +111,6 @@ class VoitureController extends Controller
             } else {
                 return $this->sendError('we have selected same equipements change it');
             }
-// return $request->photo;
             if (!is_null($request->photo)) {
                 foreach ($request->photo as $item) {
                     $file = $item->store("voitureImages", "public");

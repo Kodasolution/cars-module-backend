@@ -19,9 +19,9 @@ class CreatePaiementCommissionTable extends Migration
             $table->double("montant");
             $table->string("reference");
             $table->unsignedBigInteger("commission_id")->index();
-            $table->unsignedBigInteger("utilisateur_id")->index();
-            $table->foreign('commission_id')->references('id')->on('commission')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('utilisateur_id')->references('id')->on('utilisateurs')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger("admin_id")->index();
+            $table->foreign('commission_id')->references('id')->on('commission');
+            $table->foreign('admin_id')->references('id')->on('admins');
             $table->timestamps();
         });
     }

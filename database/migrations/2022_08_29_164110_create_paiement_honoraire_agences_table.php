@@ -20,9 +20,9 @@ class CreatePaiementHonoraireAgencesTable extends Migration
             $table->string("reference");
             $table->boolean("paye")->default(0);
             $table->unsignedBigInteger("honoraire_id")->index();
-            $table->unsignedBigInteger("utilisateur_id")->index();
+            $table->unsignedBigInteger("admin_id")->index();
             $table->foreign('honoraire_id')->references('id')->on('honoraire_agences');
-            $table->foreign('utilisateur_id')->references('id')->on('utilisateurs');
+            $table->foreign('admin_id')->references('id')->on('admins');
             $table->timestamps();
         });
     }
