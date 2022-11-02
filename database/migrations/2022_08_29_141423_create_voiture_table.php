@@ -17,9 +17,7 @@ class CreateVoitureTable extends Migration
             $table->id();
             $table->unsignedBigInteger('type_voiture_id')->index();
             $table->unsignedBigInteger('article_id')->index();
-            $table->string("nom_voiture");
             $table->string("plaque");
-            $table->string("slug_nom_vehicule")->nullable();
             $table->string("version")->nullable();
             $table->string("boite_de_vitesse");
             $table->integer("kilometrage");
@@ -35,13 +33,11 @@ class CreateVoitureTable extends Migration
             $table->integer("capacite_charge_max")->nullable();
             $table->boolean("valide")->default(0);
             $table->boolean("en_location")->default(1);
-            $table->boolean("active")->default(0);
             $table->string("condition_de_location")->nullable();
             $table->unsignedBigInteger('model_id')->index();
             $table->foreign('model_id')->references('id')->on('modele');
             $table->foreign('type_voiture_id')->references('id')->on('type_voitures');
             $table->foreign('article_id')->references('id')->on('articles');
-            $table->timestamps();
         });
     }
 
