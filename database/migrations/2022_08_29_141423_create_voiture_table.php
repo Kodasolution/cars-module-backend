@@ -29,7 +29,7 @@ class CreateVoitureTable extends Migration
             $table->string("volant");
             $table->integer("nombre_places");
             $table->integer("nombre_portes");
-            $table->integer("annee_de_fabrication");
+            $table->string("annee_de_fabrication");
             $table->integer("capacite_charge_max")->nullable();
             $table->boolean("valide")->default(0);
             $table->boolean("en_location")->default(1);
