@@ -21,7 +21,10 @@ class VoitureResourceDetail extends JsonResource
     public function toArray($request)
     {
         return
-        [
+        [           
+            "article"=> new ArticleResource($this->article),
+            "type_voiture"=>new TypeVoitureResource($this->type),
+            "modele"=>new ModeleResource($this->modele),
             "id"=>$this->id,
             "active"=>$this->active,
             "annee_de_fabrication"=>$this->annee_de_fabrication,
@@ -46,11 +49,8 @@ class VoitureResourceDetail extends JsonResource
             "valide"=>$this->valide,
             "volant"=>$this->volant,
             "version"=>$this->version,
-            "photo"=>PhotoResource::collection($this->photos),
-            "entreprise"=> new EntrepriseResource($this->entreprise),
-            "type_voiture"=>new TypeVoitureResource($this->type),
-            "modele"=>new ModeleResource($this->modele),
-            "marque_id"=>new MarqueResource($this->marque),
+      
+            // "marque_id"=>new MarqueResource($this->marque),
             "equipement"=> EquipementResource::collection($this->equipements)
         ];
     }

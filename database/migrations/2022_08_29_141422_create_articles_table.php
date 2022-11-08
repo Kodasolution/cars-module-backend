@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration
             $table->string("slug_nom_article")->nullable();
             $table->double("prix_article");
             $table->string("type_article");
-            $table->boolean("actif")->default(0);
+            $table->boolean("actif")->nullable()->default(0);
             $table->string("nombre_view")->nullable();
             $table->unsignedBigInteger("entreprise_id")->index();
             $table->foreign('entreprise_id')->references('id')->on('entreprises');

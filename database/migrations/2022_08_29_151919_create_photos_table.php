@@ -16,9 +16,10 @@ class CreatePhotosTable extends Migration
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
             $table->string("url_photo");
-            $table->boolean("principale")->default(0);
+            $table->boolean("principale")->nullable()->default(0);
             $table->unsignedBigInteger("article_id")->index();
-            $table->foreign('article_id')->references('id')->on('articles');            $table->timestamps();
+            $table->foreign('article_id')->references('id')->on('articles');    
+            $table->timestamps();
         });
     }
 

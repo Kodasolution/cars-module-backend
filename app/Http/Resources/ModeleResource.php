@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\MarqueResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ModeleResource extends JsonResource
@@ -17,7 +18,7 @@ class ModeleResource extends JsonResource
         return [
             'id'=>$this->id,
             'modele'=>$this->modele,
-            "marque_id"=>$this->marque_id
+            "marque"=>new MarqueResource($this->marque)
         ];
     }
 }

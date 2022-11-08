@@ -2,27 +2,40 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\VoitureUpdateRequest;
+use App\Http\Resources\VoitureByAgenceResource;
+use App\Http\Resources\VoitureResource;
+use App\Http\Resources\VoitureResourceDetail;
+use App\Models\Article;
+use App\Models\Entreprise;
+use App\Models\Equipement;
+use App\Models\LigneEquipementsVoiture;
 use App\Models\Marque;
 use App\Models\Modele;
 use App\Models\Photos;
-use App\Models\Adresse;
-use App\Models\Voiture;
-use App\Models\Entreprise;
-use App\Models\Equipement;
 use App\Models\TypeVoiture;
+use App\Models\Voiture;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\VoitureResource;
-use App\Models\LigneEquipementsVoiture;
-use App\Http\Requests\VoitureStoreRequest;
-use App\Http\Requests\VoitureUpdateRequest;
-use App\Http\Resources\VoitureResourceDetail;
-use App\Http\Resources\VoitureByAgenceResource;
+use Illuminate\Support\Facades\DB;
 
 class VoitureController extends Controller
 {
+    /**
+     * five car principal for index
+     * @return \Illuminate\Http\Response
+     */
+
+    public function voitureFiveFirst()
+    {
+        $voiture = Voiture::paginate(5);
+        if (sizeof($voiture) == 0) {
+            return $this->sendError('Voiture not found.');
+        }
+        return $this->sendResponse(VoitureResourceDetail::collection($voiture), 'fetch is called Successfully.');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +47,7 @@ class VoitureController extends Controller
         if (sizeof($voiture) == 0) {
             return $this->sendError('Voiture not found.');
         }
-        return $this->sendResponse(VoitureResource::collection($voiture), 'fetch is called Successfully.');
+        return $this->sendResponse(VoitureResourceDetail::collection($voiture), 'fetch is called Successfully.');
     }
 
     /**
@@ -43,28 +56,65 @@ class VoitureController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(VoitureStoreRequest $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
         try {
-            $ModelExist = Modele::find($request->model_id);
             $entrepriseExist = Entreprise::find($request->entreprise_id);
-            $typeExist = TypeVoiture::find($request->type_voiture_id);
-            $MarqueExist = Marque::find($request->marque_id);
-            if (is_null($MarqueExist)) {
-                return $this->sendError('marque_id not found.');
-            }
-            if (is_null($ModelExist)) {
-                return $this->sendError('model_id not found.');
-            }
             if (is_null($entrepriseExist)) {
                 return $this->sendError('entreprise_id not found.');
+            }
+            $dataArticle = $request->validate([
+                "nom_article" => "required|unique:articles,nom_article",
+                "prix_article" => "required",
+                "type_article" => "required",
+                "entreprise_id" => "required",
+                "slug_nom_article" => "",
+                "actif" => "",
+                "nombre_view" => "",
+
+                "plaque" => "required|unique:voiture,plaque",
+                "boite_de_vitesse" => "required",
+                "kilometrage" => "required",
+                "numero_de_chassis" => "required",
+                "couleur" => "required",
+                "carburant" => "required",
+                "volant" => "required",
+                "nombre_places" => "required",
+                "nombre_portes" => "required",
+                "annee_de_fabrication" => "required",
+                "type_voiture_id" => "required",
+                "model_id" => "required",
+                "entreprise_id" => "required",
+                "valide" => 'boolean',
+                "en_location" => 'boolean',
+                "active" => 'boolean',
+                "condition_de_location" => "",
+                "slug_nom_vehicule" => "",
+                "consommation" => "",
+                "capacite_charge_max" => "",
+                "version" => "",
+            ]);
+            Article::create([
+                "nom_article" => $request->nom_article,
+                "prix_article" => $request->prix_article,
+                "type_article" => $request->type_article,
+                "entreprise_id" => $request->entreprise_id,
+                "slug_nom_article" => $request->slug_nom_article,
+                "actif" => $request->actif,
+                "nombre_view" => $request->nombre_view,
+            ]);
+            $article_id = DB::getPdo()->lastInsertId();
+            $ModelExist = Modele::find($request->model_id);
+            $typeExist = TypeVoiture::find($request->type_voiture_id);
+            if (is_null($ModelExist)) {
+                return $this->sendError('model_id not found.');
             }
             if (is_null($typeExist)) {
                 return $this->sendError('type_voiture_id not found.');
             }
             $voiture = Voiture::create([
-                "nom_voiture" => $request->nom_voiture,
+                "article_id" => $article_id,
                 "plaque" => $request->plaque,
                 "boite_de_vitesse" => $request->boite_de_vitesse,
                 "kilometrage" => $request->kilometrage,
@@ -75,16 +125,15 @@ class VoitureController extends Controller
                 "nombre_places" => $request->nombre_places,
                 "nombre_portes" => $request->nombre_portes,
                 "annee_de_fabrication" => $request->annee_de_fabrication,
-                "prix" => $request->prix,
                 "type_voiture_id" => $request->type_voiture_id,
                 "model_id" => $request->model_id,
-                "entreprise_id" => $request->entreprise_id,
-                "marque_id" => $request->marque_id,
+
                 // "valide" => $request->valide,
                 // "en_location" => $request->en_location,
-                // "active" => $request->active,
+                // "version"=>$request->version,
+                // "poids"=>$request->poid,
+
                 "condition_de_location" => $request->condition_de_location,
-                "slug_nom_vehicule" => $request->slug_nom_vehicule,
                 "consommation" => $request->consommation,
                 "capacite_charge_max" => $request->capacite_charge_max,
             ]);
@@ -115,7 +164,7 @@ class VoitureController extends Controller
                 foreach ($request->photo as $item) {
                     $file = $item->store("voitureImages", "public");
                     Photos::create([
-                        "voiture_id" => $voiture_id,
+                        "article_id" => $article_id,
                         "url_photo" => $file,
                     ]);
                 }
@@ -130,7 +179,6 @@ class VoitureController extends Controller
 
         }
     }
-
     /**
      * Display the specified resource.
      *
@@ -162,10 +210,7 @@ class VoitureController extends Controller
             $ModelExist = Modele::find($request->model_id);
             $entrepriseExist = Entreprise::find($request->entreprise_id);
             $typeExist = TypeVoiture::find($request->type_voiture_id);
-            $MarqueExist = Marque::find($request->marque_id);
-            if (is_null($MarqueExist)) {
-                return $this->sendError('marque_id not found.');
-            }
+        
             if (is_null($ModelExist)) {
                 return $this->sendError('model_id not found.');
             }

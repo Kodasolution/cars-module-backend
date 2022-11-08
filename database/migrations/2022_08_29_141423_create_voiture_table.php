@@ -31,13 +31,14 @@ class CreateVoitureTable extends Migration
             $table->integer("nombre_portes");
             $table->string("annee_de_fabrication");
             $table->integer("capacite_charge_max")->nullable();
-            $table->boolean("valide")->default(0);
-            $table->boolean("en_location")->default(1);
+            $table->boolean("valide")->nullable()->default(0);
+            $table->boolean("en_location")->nullable()->default(1);
             $table->string("condition_de_location")->nullable();
             $table->unsignedBigInteger('model_id')->index();
             $table->foreign('model_id')->references('id')->on('modele');
             $table->foreign('type_voiture_id')->references('id')->on('type_voitures');
             $table->foreign('article_id')->references('id')->on('articles');
+            $table->timestamps();
         });
     }
 

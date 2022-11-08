@@ -6,8 +6,8 @@ use App\Models\Marque;
 use App\Models\Modele;
 use App\Models\Photos;
 use App\Models\Adresse;
+use App\Models\Article;
 use App\Models\Location;
-use App\Models\Entreprise;
 use App\Models\Equipement;
 use App\Models\TypeVoiture;
 use App\Models\LigneEquipementsVoiture;
@@ -20,15 +20,6 @@ class Voiture extends Model
     protected $guarded=[];
     protected $table="voiture";
 
-    /**
-     * Get all of the Photos for the Voiture
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function Photos()
-    {
-        return $this->hasMany(Photos::class, 'voiture_id', 'id');
-    }
 
     /**
      * The roles that belong to the Voiture
@@ -54,9 +45,9 @@ class Voiture extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function entreprise()
+    public function article()
     {
-        return $this->belongsTo(Entreprise::class);
+        return $this->belongsTo(Article::class);
     }
     /**
      * Get the adresse that owns the Voiture

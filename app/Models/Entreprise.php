@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Admin;
+use App\Models\Article;
 use App\Models\Voiture;
 use App\Models\Quartier;
 use App\Models\Utilisateur;
@@ -47,8 +48,8 @@ class Entreprise extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function voitures()
+    public function articles()
     {
-        return $this->hasMany(Voiture::class, 'entreprise_id');
+        return $this->hasMany(Article::class, 'entreprise_id');
     }
 }
