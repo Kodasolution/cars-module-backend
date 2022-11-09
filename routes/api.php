@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AdresseController;
+use App\Http\Controllers\api\ArticleController;
 use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\CommuneController;
 use App\Http\Controllers\api\EntrepriseController;
@@ -71,6 +72,7 @@ Route::group(['prefix' => 'v1'], function () {
         });
         Route::group(['middleware' => ['auth:sanctum', 'super_admins:super_admin|admin']], function () {
             Route::apiResource("/voiture", VoitureController::class);
+            Route::get("/voiture-principale",[VoitureController::class,'voitureFiveFirst']);
             Route::get("/voiture-detail",[VoitureController::class,'voitureDetail']);
             Route::get("/voiture-detail/{id}",[VoitureController::class,'voitureDetailOne']);
             Route::get("/voiture-by-entreprise",[VoitureController::class,'voitureByAgence']);

@@ -22,8 +22,10 @@ class CreateEntreprisesTable extends Migration
             $table->string("logo_entreprise")->nullable();
             $table->string("nif_entreprise")->nullable();
             $table->string("type_entreprise");
-            $table->boolean("actif")->default(0);
+            $table->boolean("actif")->nullable()->default(0);
             $table->string('rue')->nullable();
+            $table->string("lattitude")->nullable();
+            $table->string("longittude")->nullable();
             $table->foreign('quartier_id')->references('id')->on('quartiers');
             $table->timestamps();
         });
