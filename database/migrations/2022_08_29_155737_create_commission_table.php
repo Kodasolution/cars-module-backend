@@ -19,7 +19,7 @@ class CreateCommissionTable extends Migration
             $table->float("taux_commission");
             $table->boolean("paye")->default(0);
             $table->unsignedBigInteger("location_entreprise_id")->index();
-            $table->foreign('location_entreprise_id')->references('id')->on('location_entreprise')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('location_entreprise_id')->references('id')->on('location_entreprise');
             $table->timestamps();
         });
     }

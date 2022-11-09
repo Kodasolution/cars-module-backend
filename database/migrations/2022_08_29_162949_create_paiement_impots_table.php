@@ -19,9 +19,9 @@ class CreatePaiementImpotsTable extends Migration
             $table->double("montant");
             $table->string("reference");
             $table->unsignedBigInteger("impot_id")->index();
-            $table->unsignedBigInteger("utilisateur_id")->index();
+            $table->unsignedBigInteger("admin_id")->index();
             $table->foreign('impot_id')->references('id')->on('impots');
-            $table->foreign('utilisateur_id')->references('id')->on('utilisateurs');
+            $table->foreign('admin_id')->references('id')->on('admins');
             $table->timestamps();
         });
     }
