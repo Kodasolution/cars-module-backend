@@ -60,15 +60,18 @@ class LoginController extends Controller
 
     public function Login(Request $request)
     {
+        
         // return Auth::guard('super_admins')->user()->email;
         $data = $request->validate([
             "email" => "required|email",
             "password" => "required",
         ]);
+        
         if (!Auth::attempt($data)) {
             return $this->sendError('the credentiels is not valid.');
         }
         $user = User::where('email', $data['email'])->firstOrFail();
+        
         if ($user->role === "super_admin") {
             $token = $user->createToken("authorToken")->plainTextToken;
             return $this->sendResponseToken(new UserResource($user), $token, 'User Created Successfully.');
@@ -76,8 +79,11 @@ class LoginController extends Controller
             $token = $user->createToken("authorToken")->plainTextToken;
             return $this->sendResponseToken(new UserResource($user), $token, 'User Created Successfully.');
         } elseif ($user->role === "client") {
+           
             $token = $user->createToken("authorToken")->plainTextToken;
             return $this->sendResponseToken(new UserResource($user), $token, 'User Created Successfully.');
+        }else{
+            return $this->sendError('the credentiels is not valid.');
         }
     }
     public function sendResponseToken($result, $pam = null, $message)

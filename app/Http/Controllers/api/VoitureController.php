@@ -32,7 +32,7 @@ class VoitureController extends Controller
     {
         $voiture = Voiture::all();
         if (sizeof($voiture) == 0) {
-            return $this->sendError('Voiture not found.');
+            return $this->sendError('No Voiture yet.');
         }
         return $this->sendResponse(VoitureResource::collection($voiture), 'fetch is called Successfully.');
     }

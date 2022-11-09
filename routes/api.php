@@ -35,6 +35,19 @@ use Illuminate\Support\Facades\Route;
 |
  */
 Route::group(['prefix' => 'v1'], function () {
+
+    Route::post("/register", [LoginController::class, 'Register']);
+    Route::post("/login", [LoginController::class, 'Login']);
+    Route::get("/voitures",[VoitureController::class,'index']);
+    Route::group(['middleware' => ['auth:sanctum']],function () {
+
+        Route::apiResource("/voiture/marque", MarqueController::class);
+        Route::get("/user",function () {
+            return 'user';
+        });
+
+    });
+
     Route::group(['prefix' => 'admin'], function () {
         Route::group(['middleware' => ['auth:sanctum', "super_admins:super_admin"]], function () {
             Route::apiResource("/voiture/marque", MarqueController::class);
@@ -69,7 +82,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::apiResource("/location", LocationController::class);
             Route::apiResource("/location-entreprise", LocationEntrepriseController::class);
         });
-        Route::post("/register", [LoginController::class, 'Register']);
-        Route::post("/login", [LoginController::class, 'Login']);
+
+
     });
 });
