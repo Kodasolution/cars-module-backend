@@ -7,6 +7,7 @@ use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\CommuneController;
 use App\Http\Controllers\api\EntrepriseController;
 use App\Http\Controllers\api\EquipementController;
+use App\Http\Controllers\api\FavoryController;
 use App\Http\Controllers\api\LigneEquipementVoitureController;
 use App\Http\Controllers\api\LigneLocationVoitureController;
 use App\Http\Controllers\api\LocationController;
@@ -53,7 +54,7 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     Route::group(['prefix' => 'admin'], function () {
-        Route::group(['middleware' => ['auth:sanctum', "super_admins:super_admin"]], function () {
+        Route::group(['middleware' => ['auth:sanctum', "roles:super_admin"]], function () {
             Route::apiResource("/voiture/marque", MarqueController::class);
             Route::apiResource("/voiture/modele", ModeleController::class);
             Route::apiResource("/voiture/parametre", ParametreController::class);
@@ -73,7 +74,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::get("/manager",[AdminController::class,'index']);
             Route::get("/manager/{id}",[AdminController::class,'show']);
         });
-        Route::group(['middleware' => ['auth:sanctum', 'super_admins:super_admin|admin']], function () {
+        Route::group(['middleware' => ['auth:sanctum', 'roles:super_admin|admin']], function () {
             Route::apiResource("/voiture", VoitureController::class);
             Route::get("/voiture-detail",[VoitureController::class,'voitureDetail']);
             Route::get("/voiture-detail/{id}",[VoitureController::class,'voitureDetailOne']);
@@ -86,7 +87,5 @@ Route::group(['prefix' => 'v1'], function () {
             Route::apiResource("/location", LocationController::class);
             Route::apiResource("/location-entreprise", LocationEntrepriseController::class);
         });
-
-
     });
 });

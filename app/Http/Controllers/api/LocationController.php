@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Classes\Cart;
 use App\Models\Client;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\LocationResource;
 use App\Http\Requests\LocationRequestStore;
 use App\Http\Requests\LocationRequestUpdate;
@@ -26,7 +28,6 @@ class LocationController extends Controller
             return $this->sendError('Location not found.');
         }
         return $this->sendResponse(LocationResource::collection($location), 'fetch is called Successfully.');
-
     }
 
     /**
@@ -37,19 +38,19 @@ class LocationController extends Controller
      */
     public function store(LocationRequestStore $request)
     {
-        $clientExist = Client::find($request->client_id);
-        if (is_null($clientExist)) {
+        if (Auth::check()) {
             return $this->sendError('client_id not found.');
         }
+        $data = Cart::getData();
         $location = Location::create(
             [
                 "date_location" => $request->date_location,
                 "montant_total" => $request->montant_total,
-                "client_id"=>$request->client_id
+                "client_id" => Auth::user()->id
             ]
         );
         $location_id = DB::getPdo()->lastInsertId();
-        
+
 
         return $this->sendResponse(new LocationResource($location), 'Location Created Successfully.');
     }
@@ -89,7 +90,6 @@ class LocationController extends Controller
         $location = Location::findOrFail($id);
         $location->update($request->all());
         return $this->sendResponse(new LocationResource($location), 'Location Updated Successfully.');
-
     }
 
     /**
@@ -107,6 +107,5 @@ class LocationController extends Controller
         $location = Location::findOrFail($id);
         $location->delete();
         return $this->sendResponse([], 'Location Deleted Successfully.');
-
     }
 }
