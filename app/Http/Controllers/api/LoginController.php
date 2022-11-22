@@ -60,7 +60,7 @@ class LoginController extends Controller
 
     public function Login(Request $request)
     {
-        
+            
         // return Auth::guard('super_admins')->user()->email;
         $data = $request->validate([
             "email" => "required|email",
@@ -95,5 +95,15 @@ class LoginController extends Controller
             'message' => $message,
         ];
         return response()->json($response, 200);
+    }
+
+    public function checkAuthUser()
+    {
+        
+        if(auth('sanctum')->check()){
+            return $this->sendResponse(new UserResource(auth()->user()),'User retrieve successfuly.');
+        } else{
+            return $this->sendError('User logout please login!');
+        }  
     }
 }

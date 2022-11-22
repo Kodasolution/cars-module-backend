@@ -38,10 +38,13 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'v1'], function () {
 
     Route::post("/register", [LoginController::class, 'Register']);
-    Route::post("/login", [LoginController::class, 'Login']);
+    Route::post("/login", [LoginController::class, 'Login']);       
+    Route::get("/voiture-principale/{limit}",[VoitureController::class,'voitureFiveFirst']);
+    Route::get("/voitures/{id}",[VoitureController::class,'show']);
     Route::get("/voitures",[VoitureController::class,'index']);
-    Route::group(['middleware' => ['auth:sanctum']],function () {
 
+    Route::group(['middleware' => ['auth:sanctum']],function () {
+        Route::get("/user/current",[LoginController::class,"checkAuthUser"]);
         Route::apiResource("/voiture/marque", MarqueController::class);
         Route::get("/user",function () {
             return 'user';
@@ -72,7 +75,6 @@ Route::group(['prefix' => 'v1'], function () {
         });
         Route::group(['middleware' => ['auth:sanctum', 'super_admins:super_admin|admin']], function () {
             Route::apiResource("/voiture", VoitureController::class);
-            Route::get("/voiture-principale",[VoitureController::class,'voitureFiveFirst']);
             Route::get("/voiture-detail",[VoitureController::class,'voitureDetail']);
             Route::get("/voiture-detail/{id}",[VoitureController::class,'voitureDetailOne']);
             Route::get("/voiture-by-entreprise",[VoitureController::class,'voitureByAgence']);

@@ -27,9 +27,9 @@ class VoitureController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function voitureFiveFirst()
+    public function voitureFiveFirst($limit)
     {
-        $voiture = Voiture::paginate(5);
+        $voiture = Voiture::paginate($limit);
         if (sizeof($voiture) == 0) {
             return $this->sendError('Voiture not found.');
         }
