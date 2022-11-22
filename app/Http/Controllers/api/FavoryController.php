@@ -48,8 +48,8 @@ class FavoryController extends Controller
         }else{
             return $this->sendError( 'not connected.');
         }
-        return $this->sendResponse($favory,'favory is save Successfully.');
-        // return $this->sendResponse(FavoryResource::collection($favory), 'favory is save Successfully.');
+        // return $this->sendResponse($favory,'favory is save Successfully.');
+        return $this->sendResponse(new FavoryResource($favory), 'favory is save Successfully.');
     }
 
     /**
@@ -107,7 +107,7 @@ class FavoryController extends Controller
         }else{
             return $this->sendError( 'not connected.');
         }
-        return $this->sendResponse($favory,'favory is save Successfully.');
-        // return $this->sendResponse(FavoryResource::collection($favory), 'favory is save Successfully.');
+        // return $this->sendResponse($favory,'favory is save Successfully.');
+        return $this->sendResponse(new FavoryResource($favory), 'favory is save Successfully.');
     }
 }
