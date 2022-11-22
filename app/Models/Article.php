@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Favory;
 use App\Models\Photos;
 use App\Models\Entreprise;
 use Illuminate\Database\Eloquent\Model;
@@ -26,5 +27,17 @@ class Article extends Model
     {
     return $this->belongsTo(Entreprise::class);
     }
+
+    /**
+     * Get the user that owns the Article
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function favories()
+    {
+        return $this->hasMany(Favory::class,"article_id");
+    }
+
+
 
 }
