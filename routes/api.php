@@ -3,8 +3,10 @@
 use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AdresseController;
 use App\Http\Controllers\api\ArticleController;
+use App\Http\Controllers\api\ChambreController;
 use App\Http\Controllers\api\ClientController;
 use App\Http\Controllers\api\CommuneController;
+use App\Http\Controllers\api\ComoditeController;
 use App\Http\Controllers\api\EntrepriseController;
 use App\Http\Controllers\api\EquipementController;
 use App\Http\Controllers\api\FavoryController;
@@ -19,10 +21,14 @@ use App\Http\Controllers\api\ParametreController;
 use App\Http\Controllers\api\PhotoController;
 use App\Http\Controllers\api\ProvinceController;
 use App\Http\Controllers\api\QuartierController;
+use App\Http\Controllers\api\SalleController;
+use App\Http\Controllers\api\TypeChambreController;
+use App\Http\Controllers\api\TypeSalleController;
 use App\Http\Controllers\api\TypeVoitureController;
 use App\Http\Controllers\api\UtilisateurController;
 use App\Http\Controllers\api\VoitureController;
 use App\Http\Controllers\api\ZoneController;
+use App\Models\Comodite;
 use Illuminate\Support\Facades\Route;
 
 
@@ -71,6 +77,12 @@ Route::group(['prefix' => 'v1'], function () {
             Route::get("/client/{id}",[ClientController::class, 'show']);
             Route::apiResource("/location", LocationController::class);
             Route::apiResource("/location-entreprise", LocationEntrepriseController::class);
+            Route::post("/type-chambre",[TypeChambreController::class,'store']);
+            Route::post("/type-salle",[TypeSalleController::class,'store']);
+            Route::post("/comodite",[ComoditeController::class,'store']);
+            Route::post("/chambre",[ChambreController::class,'store']);
+            Route::post("/salle",[SalleController::class,'store']);
+
         });
         Route::group(['middleware' =>['auth:sanctum','roles:client']],function(){
             Route::apiResource("/favory",FavoryController::class); 
@@ -78,5 +90,15 @@ Route::group(['prefix' => 'v1'], function () {
         });
         Route::post("/register", [LoginController::class, 'Register']);
         Route::post("/login", [LoginController::class, 'Login']);
+        Route::get("/type-chambre",[TypeChambreController::class,'index']);
+        Route::get("/type-chambre/{id}",[TypeChambreController::class,'show']);
+        Route::get("/type-salle",[TypeSalleController::class,'index']);
+        Route::get("/type-salle/{id}",[TypeSalleController::class,'show']);
+        Route::get("/comodite",[ComoditeController::class,'index']);
+        Route::get("/comodite/{id}",[ComoditeController::class,'show']);
+        Route::get("/chambre",[ChambreController::class,'index']);
+        Route::get("/chambre/{id}",[ChambreController::class,'show']);
+        Route::get("/salle",[SalleController::class,'index']);
+        Route::get("/salle/{id}",[SalleController::class,'show']);
     });
 });

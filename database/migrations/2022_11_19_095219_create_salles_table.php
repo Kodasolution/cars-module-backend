@@ -19,7 +19,7 @@ class CreateSallesTable extends Migration
             $table->unsignedBigInteger("type_salle_id")->index();
             $table->double("surface_salle");
             $table->integer("capacite_accueil");
-            $table->text("description_salle");
+            $table->text("description_salle")->nullable();
             $table->boolean("libre")->default(true);
             $table->boolean("valide")->default(false);
             $table->foreign('article_id')->references('id')->on('articles');
