@@ -49,8 +49,6 @@ class VoitureResourceDetail extends JsonResource
             "valide"=>$this->valide,
             "volant"=>$this->volant,
             "version"=>$this->version,
-      
-            // "marque_id"=>new MarqueResource($this->marque),
             "equipement"=> EquipementResource::collection($this->equipements)
         ];
     }
