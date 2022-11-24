@@ -29,7 +29,7 @@ class UserRequestStore extends FormRequest
             'email'=>"required|email|unique:users,email",
             "phone"=>"required",
             'password'=>"required",
-            'role'=>'required',
+            'role'=>'',
             'entreprise'=>''
         ];
     }
